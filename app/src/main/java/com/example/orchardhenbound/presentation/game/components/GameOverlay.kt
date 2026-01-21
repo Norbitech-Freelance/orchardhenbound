@@ -20,7 +20,8 @@ import androidx.compose.ui.unit.dp
 import com.example.orchardhenbound.R
 import com.example.orchardhenbound.presentation.components.CustomButton
 import com.example.orchardhenbound.presentation.components.FullScreenBackground
-import com.example.orchardhenbound.utils.clickableNoRipple
+import com.example.orchardhenbound.utils.extensions.clickableNoRipple
+import com.example.orchardhenbound.utils.extensions.offsetPx
 import androidx.compose.material3.MaterialTheme
 
 @Composable

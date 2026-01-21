@@ -20,7 +20,7 @@ import com.example.orchardhenbound.R
 import com.example.orchardhenbound.ui.theme.STROKE_PRIMARY
 import com.example.orchardhenbound.ui.theme.TEXT_FILL_LIGHT_BOTTOM
 import com.example.orchardhenbound.ui.theme.TEXT_FILL_LIGHT_TOP
-import com.example.orchardhenbound.utils.clickableNoRipple
+import com.example.orchardhenbound.utils.extensions.clickableNoRipple
 
 @Composable
 fun CustomButton(

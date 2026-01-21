@@ -28,9 +28,9 @@ import com.example.orchardhenbound.presentation.game.components.GameOverOverlay
 import com.example.orchardhenbound.presentation.game.components.HeartsRow
 import com.example.orchardhenbound.presentation.game.components.PauseOverlay
 import com.example.orchardhenbound.presentation.game.components.ScorePlate
-import com.example.orchardhenbound.utils.clickableNoRipple
+import com.example.orchardhenbound.utils.extensions.clickableNoRipple
 import com.example.orchardhenbound.utils.getDrawableRes
-import com.example.orchardhenbound.utils.offsetPx
+import com.example.orchardhenbound.utils.extensions.offsetPx
 
 private const val MAX_LIVES = 3
 

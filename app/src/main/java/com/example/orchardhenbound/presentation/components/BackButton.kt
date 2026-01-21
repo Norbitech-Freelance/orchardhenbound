@@ -11,7 +11,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.example.orchardhenbound.R
-import com.example.orchardhenbound.utils.clickableNoRipple
+import com.example.orchardhenbound.utils.extensions.clickableNoRipple
+import com.example.orchardhenbound.utils.extensions.offsetPx
+
 
 @Composable
 fun BackButton(
