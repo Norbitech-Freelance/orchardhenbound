@@ -6,6 +6,9 @@ coreKtx = "1.15.0"
 lifecycle = "2.8.7"
 activityCompose = "1.9.3"
 
+compileSdk = "36"
+targetSdk = "36"
+
 composeBom = "2024.12.01"
 
 room = "2.6.1"

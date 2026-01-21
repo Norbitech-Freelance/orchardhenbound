@@ -7,12 +7,12 @@ plugins {
 
 android {
     namespace = "com.example.orchardhenbound"
-    compileSdk = 35
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "com.example.orchardhenbound"
         minSdk = 24
-        targetSdk = 35
+        targetSdk = 36
         versionCode = 1
         versionName = "1.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -63,6 +63,7 @@ dependencies {
     implementation(libs.androidx.room.ktx)
     kapt(libs.androidx.room.compiler)
 
+    // Koin
     implementation(libs.koin.android)
     implementation(libs.koin.androidx.compose)
 
