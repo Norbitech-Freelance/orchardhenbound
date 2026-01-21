@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -33,10 +34,11 @@ import com.example.orchardhenbound.presentation.components.FullScreenBackground
 import com.example.orchardhenbound.presentation.components.StrokeText
 import com.example.orchardhenbound.ui.theme.ACCENT_BOTTOM
 import com.example.orchardhenbound.ui.theme.ACCENT_TOP
-import com.example.orchardhenbound.ui.theme.BalooFontFamily
 import com.example.orchardhenbound.ui.theme.PLATE_BOTTOM
 import com.example.orchardhenbound.ui.theme.PLATE_TOP
 import com.example.orchardhenbound.ui.theme.STROKE_PRIMARY
+import com.example.orchardhenbound.presentation.game.components.RecordPlate
+import com.example.orchardhenbound.presentation.game.components.TopBarRow
 
 @Composable
 fun RecordsScreen(
@@ -71,25 +73,10 @@ private fun RecordsContent(
         )
 
         Column(modifier = Modifier.fillMaxSize()) {
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(start = 24.dp, end = 24.dp, top = 60.dp)
-                    .height(60.dp),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                BackButton(onClick = onBack)
-
-                StrokeText(
-                    text = stringResource(R.string.records_title),
-                    fontFamily = BalooFontFamily,
-                    fontSize = 40.sp,
-                    fillBrush = SolidColor(Color.White),
-                    strokeColor = STROKE_PRIMARY,
-                    strokeWidth = 8f
-                )
-            }
+            TopBarRow(
+                buttonText = stringResource(R.string.game_play_again),
+                onClick = onBack
+            )
 
             if (records.isEmpty()) {
                 Column(
@@ -100,7 +87,7 @@ private fun RecordsContent(
                 ) {
                     StrokeText(
                         text = stringResource(R.string.records_empty),
-                        fontFamily = BalooFontFamily,
+                        fontFamily = MaterialTheme.typography.bodyLarge.fontFamily!!,
                         fontSize = 32.sp,
                         fillBrush = Brush.linearGradient(listOf(ACCENT_TOP, ACCENT_BOTTOM)),
                         strokeColor = STROKE_PRIMARY,
@@ -122,62 +109,6 @@ private fun RecordsContent(
                     item { Spacer(modifier = Modifier.height(24.dp)) }
                 }
             }
-        }
-    }
-}
-
-@Composable
-private fun RecordPlate(
-    record: Record,
-    dimmed: Boolean
-) {
-    val bgAlpha = if (dimmed) 0.55f else 1f
-    val borderAlpha = if (dimmed) 0.55f else 1f
-
-    val plateBrush = Brush.linearGradient(
-        colors = listOf(
-            PLATE_TOP.copy(alpha = bgAlpha),
-            PLATE_BOTTOM.copy(alpha = bgAlpha)
-        )
-    )
-
-    Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(60.dp)
-            .background(brush = plateBrush, shape = RoundedCornerShape(50.dp))
-            .border(
-                width = 1.dp,
-                color = STROKE_PRIMARY.copy(alpha = borderAlpha),
-                shape = RoundedCornerShape(50.dp)
-            )
-            .padding(horizontal = 28.dp),
-        contentAlignment = Alignment.Center
-    ) {
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            val accentBrush = Brush.linearGradient(listOf(ACCENT_TOP, ACCENT_BOTTOM))
-
-            StrokeText(
-                text = record.date,
-                fontFamily = BalooFontFamily,
-                fontSize = 32.sp,
-                fillBrush = accentBrush,
-                strokeColor = STROKE_PRIMARY,
-                strokeWidth = 6f
-            )
-
-            StrokeText(
-                text = record.score.toString(),
-                fontFamily = BalooFontFamily,
-                fontSize = 32.sp,
-                fillBrush = accentBrush,
-                strokeColor = STROKE_PRIMARY,
-                strokeWidth = 6f
-            )
         }
     }
 }
