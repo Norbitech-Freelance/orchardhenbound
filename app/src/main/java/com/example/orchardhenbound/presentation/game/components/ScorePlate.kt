@@ -23,6 +23,54 @@ import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.orchardhenbound.R
-import com.example.orchardhenbound.ui.theme.ACCENT_BOTTOM
-import com.example.orchardhenbound.ui.theme.ACCENT_TOP
-import com.example.orchardhenbound.ui.theme.STROKE_PRIMARY
+
+@Composable
+fun ScorePlate(
+    score: Int,
+    modifier: Modifier = Modifier,
+    width: Dp = 120.dp,
+    height: Dp = 40.dp,
+    fontSize: TextUnit = 32.sp,
+    strokeWidthPx: Float = 3.8f,
+    @DrawableRes backgroundRes: Int = R.drawable.bg_score_plate
+) {
+    val gradient = Brush.verticalGradient(
+        listOf(
+            MaterialTheme.colorScheme.secondary,
+            MaterialTheme.colorScheme.primary
+        )
+    )
+
+    val baseStyle = TextStyle(
+        fontFamily = MaterialTheme.typography.titleLarge.fontFamily,
+        fontSize = fontSize,
+        lineHeight = fontSize,
+        fontWeight = FontWeight.W400,
+        textAlign = TextAlign.Center
+    )
+
+    Box(
+        modifier = modifier.size(width, height),
+        contentAlignment = Alignment.Center
+    ) {
+        Image(
+            painter = painterResource(id = backgroundRes),
+            contentDescription = null,
+            modifier = Modifier.fillMaxSize(),
+            contentScale = ContentScale.Fit
+        )
+
+        Text(
+            text = score.toString(),
+            style = baseStyle.copy(
+                color = MaterialTheme.colorScheme.primary,
+                drawStyle = Stroke(width = strokeWidthPx, join = StrokeJoin.Round)
+            )
+        )
+
+        Text(
+            text = score.toString(),
+            style = baseStyle.copy(brush = gradient)
+        )
+    }
+}

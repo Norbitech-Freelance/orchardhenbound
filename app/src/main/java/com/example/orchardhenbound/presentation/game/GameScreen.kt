@@ -61,7 +61,6 @@ fun GameScreen(
     BoxWithConstraints(modifier = Modifier.fillMaxSize()) {
         val density = LocalDensity.current
 
-        // ✅ ВАЖНО: используем maxWidth/maxHeight -> IDE видит, что scope BoxWithConstraints используется
         val wPx = with(density) { maxWidth.toPx() }
         val hPx = with(density) { maxHeight.toPx() }
 
