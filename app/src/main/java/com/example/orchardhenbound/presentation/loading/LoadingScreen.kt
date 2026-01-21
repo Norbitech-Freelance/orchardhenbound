@@ -1,5 +1,6 @@
 package com.example.orchardhenbound.presentation.loading
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
@@ -21,6 +22,7 @@ import com.example.orchardhenbound.R
 import com.example.orchardhenbound.presentation.components.FullScreenBackground
 import kotlinx.coroutines.delay
 
+@SuppressLint("UnusedBoxWithConstraintsScope")
 @Composable
 fun LoadingScreen(onFinished: () -> Unit) {
 
@@ -41,7 +43,6 @@ fun LoadingScreen(onFinished: () -> Unit) {
         onFinished()
     }
 
-    // базовые размеры макета
     val baseW = 412f
     val baseH = 892f
     val loadingW = 152f

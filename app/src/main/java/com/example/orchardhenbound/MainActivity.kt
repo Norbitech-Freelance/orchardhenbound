@@ -5,17 +5,18 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
+import androidx.navigation.NavGraph.Companion.findStartDestination
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import com.example.orchardhenbound.presentation.game.GameScreen
 import com.example.orchardhenbound.presentation.game.GameViewModel
 import com.example.orchardhenbound.presentation.loading.LoadingScreen
 import com.example.orchardhenbound.presentation.menu.MenuScreen
+import com.example.orchardhenbound.presentation.navigation.Routes
 import com.example.orchardhenbound.presentation.privacy.PrivacyPolicyScreen
 import com.example.orchardhenbound.presentation.records.RecordsScreen
 import com.example.orchardhenbound.presentation.records.RecordsViewModel
@@ -46,37 +47,61 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun AppNavigation() {
-    var currentScreen by remember { mutableStateOf<AppScreen>(AppScreen.Loading) }
+    val navController = rememberNavController()
 
-    when (currentScreen) {
-        AppScreen.Loading -> LoadingScreen(
-            onFinished = { currentScreen = AppScreen.Menu }
-        )
+    NavHost(
+        navController = navController,
+        startDestination = Routes.LOADING
+    ) {
+        composable(Routes.LOADING) {
+            LoadingScreen(
+                onFinished = {
 
-        AppScreen.Menu -> MenuScreen(
-            onStart = { currentScreen = AppScreen.Game },
-            onRecords = { currentScreen = AppScreen.Records },
-            onPrivacy = { currentScreen = AppScreen.PrivacyPolicy }
-        )
+                    navController.navigate(Routes.MENU) {
+                        popUpTo(Routes.LOADING) { inclusive = true }
+                        launchSingleTop = true
+                    }
+                }
+            )
+        }
 
-        AppScreen.Game -> {
+        composable(Routes.MENU) {
+            MenuScreen(
+                onStart = { navController.navigate(Routes.GAME) },
+                onRecords = { navController.navigate(Routes.RECORDS) },
+                onPrivacy = { navController.navigate(Routes.PRIVACY) }
+            )
+        }
+
+        composable(Routes.GAME) {
             val gameViewModel: GameViewModel = koinViewModel()
             GameScreen(
                 viewModel = gameViewModel,
-                onExitToMenu = { currentScreen = AppScreen.Menu }
+                onExitToMenu = {
+                    navController.navigate(Routes.MENU) {
+
+                        popUpTo(navController.graph.findStartDestination().id) {
+                            saveState = true
+                        }
+                        launchSingleTop = true
+                        restoreState = true
+                    }
+                }
             )
         }
 
-        AppScreen.Records -> {
+        composable(Routes.RECORDS) {
             val recordsViewModel: RecordsViewModel = koinViewModel()
             RecordsScreen(
                 viewModel = recordsViewModel,
-                onBack = { currentScreen = AppScreen.Menu }
+                onBack = { navController.popBackStack() }
             )
         }
 
-        AppScreen.PrivacyPolicy -> PrivacyPolicyScreen(
-            onBack = { currentScreen = AppScreen.Menu }
-        )
+        composable(Routes.PRIVACY) {
+            PrivacyPolicyScreen(
+                onBack = { navController.popBackStack() }
+            )
+        }
     }
 }
