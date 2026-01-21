@@ -1,9 +1,9 @@
-package com.example.orchardhenbound
+package com.example.orchardhenbound.ui.navigation
 
-sealed class AppScreen {
-    data object Loading : AppScreen()
-    data object Menu : AppScreen()
-    data object Game : AppScreen()
-    data object Records : AppScreen()
-    data object PrivacyPolicy : AppScreen()
+sealed class AppScreen(val route: String) {
+    data object Loading : AppScreen("loading")
+    data object Menu : AppScreen("menu")
+    data object Game : AppScreen("game")
+    data object Records : AppScreen("records")
+    data object Privacy : AppScreen("privacy")
 }
