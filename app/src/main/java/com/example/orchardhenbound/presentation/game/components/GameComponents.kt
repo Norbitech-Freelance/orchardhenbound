@@ -3,7 +3,6 @@ package com.example.orchardhenbound.presentation.game.components
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.absoluteOffset
@@ -17,17 +16,16 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.orchardhenbound.R
 import com.example.orchardhenbound.presentation.components.CustomButton
 import com.example.orchardhenbound.presentation.components.FullScreenBackground
 import com.example.orchardhenbound.utils.clickableNoRipple
-import kotlin.math.min
+
+/*  PAUSE OVERLAY ---------------- */
 
 @Composable
 fun PauseOverlay(
@@ -45,11 +43,19 @@ fun PauseOverlay(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
-            CustomButton(text = stringResource(R.string.game_resume), onClick = onResume)
-            CustomButton(text = stringResource(R.string.game_exit), onClick = onExit)
+            CustomButton(
+                text = stringResource(R.string.game_resume),
+                onClick = onResume
+            )
+            CustomButton(
+                text = stringResource(R.string.game_exit),
+                onClick = onExit
+            )
         }
     }
 }
+
+/* ---------------- GAME OVER ---------------- */
 
 @Composable
 fun GameOverOverlay(
@@ -57,21 +63,7 @@ fun GameOverOverlay(
     onPlayAgain: () -> Unit,
     onExit: () -> Unit
 ) {
-    val baseW = 412f
-    val baseH = 892f
-    val gameOverW = 280.19f
-    val gameOverH = 214f
-    val ratio = gameOverW / gameOverH
-
-    BoxWithConstraints(modifier = Modifier.fillMaxSize()) {
-        val density = LocalDensity.current
-
-        // важно: maxWidth/maxHeight чтобы scope считался использованным
-        val w = with(density) { maxWidth.toPx() }
-        val h = with(density) { maxHeight.toPx() }
-
-        fun x(v: Float): Dp = (w * (v / baseW)).dp
-        fun y(v: Float): Dp = (h * (v / baseH)).dp
+    Box(modifier = Modifier.fillMaxSize()) {
 
         FullScreenBackground(
             backgroundRes = R.drawable.bg_overlay,
@@ -83,37 +75,31 @@ fun GameOverOverlay(
             contentDescription = null,
             modifier = Modifier
                 .align(Alignment.TopCenter)
-                .absoluteOffset(y = y(210f))
-                .width(x(gameOverW))
-                .aspectRatio(ratio),
+                .absoluteOffset(y = 210.dp)
+                .width(280.dp)
+                .aspectRatio(280.19f / 214f),
             contentScale = ContentScale.Fit
         )
-
-        val s = min(w / baseW, h / baseH)
 
         ScorePlate(
             score = score,
             modifier = Modifier
                 .align(Alignment.TopCenter)
-                .absoluteOffset(y = y(450f)),
-            width = x(120f),
-            height = y(40f),
-            fontSize = (32f * s).sp,
-            strokeWidthPx = 3.8f * s
+                .absoluteOffset(y = 450.dp)
         )
 
         Row(
             modifier = Modifier
                 .align(Alignment.TopCenter)
-                .absoluteOffset(y = y(556f)),
+                .absoluteOffset(y = 556.dp),
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(x(8f))
+            horizontalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             Image(
                 painter = painterResource(id = R.drawable.btn_game_over_back),
                 contentDescription = null,
                 modifier = Modifier
-                    .size(width = x(57f), height = y(60f))
+                    .size(width = 57.dp, height = 60.dp)
                     .clickableNoRipple { onExit() },
                 contentScale = ContentScale.Fit
             )
@@ -122,8 +108,8 @@ fun GameOverOverlay(
                 text = stringResource(R.string.game_play_again),
                 onClick = onPlayAgain,
                 backgroundRes = R.drawable.btn_play_again_bg,
-                width = x(220f),
-                height = y(60f),
+                width = 220.dp,
+                height = 60.dp,
                 fillBrush = Brush.verticalGradient(
                     listOf(
                         MaterialTheme.colorScheme.secondary,
