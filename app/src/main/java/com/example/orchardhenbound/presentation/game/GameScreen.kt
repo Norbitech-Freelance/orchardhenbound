@@ -23,13 +23,13 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.orchardhenbound.R
-import com.example.orchardhenbound.utils.getDrawableRes
 import com.example.orchardhenbound.presentation.components.FullScreenBackground
 import com.example.orchardhenbound.presentation.game.components.GameOverOverlay
 import com.example.orchardhenbound.presentation.game.components.HeartsRow
 import com.example.orchardhenbound.presentation.game.components.PauseOverlay
 import com.example.orchardhenbound.presentation.game.components.ScorePlate
 import com.example.orchardhenbound.utils.clickableNoRipple
+import com.example.orchardhenbound.utils.getDrawableRes
 import com.example.orchardhenbound.utils.offsetPx
 
 private const val MAX_LIVES = 3
@@ -53,7 +53,6 @@ fun GameScreen(
         if (!state.isPaused) {
             viewModel.pause()
         } else {
-            // second back: save and exit
             viewModel.exitToMenuSaveScoreIfNeeded()
             onExitToMenu()
         }
@@ -61,8 +60,10 @@ fun GameScreen(
 
     BoxWithConstraints(modifier = Modifier.fillMaxSize()) {
         val density = LocalDensity.current
-        val wPx = constraints.maxWidth.toFloat()
-        val hPx = constraints.maxHeight.toFloat()
+
+        // ✅ ВАЖНО: используем maxWidth/maxHeight -> IDE видит, что scope BoxWithConstraints используется
+        val wPx = with(density) { maxWidth.toPx() }
+        val hPx = with(density) { maxHeight.toPx() }
 
         val itemSizeDp = 46.dp
         val itemSizePx = with(density) { itemSizeDp.toPx() }
@@ -124,13 +125,6 @@ fun GameScreen(
                 .padding(end = 18.dp, top = 58.dp)
         )
 
-        // Score
-        ScorePlate(
-            score = state.score,
-            modifier = Modifier
-                .align(Alignment.TopCenter)
-                .padding(top = 140.dp)
-        )
 
         // Player
         Box(

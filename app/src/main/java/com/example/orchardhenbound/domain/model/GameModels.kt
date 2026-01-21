@@ -1,13 +1,5 @@
 package com.example.orchardhenbound.domain.model
 
-data class FallingItem(
-    val id: Long,
-    val type: ItemType,
-    val xPx: Float,
-    val yPx: Float,
-    val speedPxPerSec: Float
-)
-
 enum class ItemType {
     GOOD_1,
     GOOD_2,
@@ -17,3 +9,11 @@ enum class ItemType {
     BAD_1,
     BAD_2
 }
+
+data class FallingItem(
+    val id: Long,
+    val type: ItemType,
+    val xPx: Float,
+    val yPx: Float,
+    val speedPxPerSec: Float
+)

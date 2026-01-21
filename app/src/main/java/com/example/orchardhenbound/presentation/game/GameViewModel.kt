@@ -3,6 +3,8 @@ package com.example.orchardhenbound.presentation.game
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.orchardhenbound.data.repository.RecordsRepository
+import com.example.orchardhenbound.domain.model.FallingItem
+import com.example.orchardhenbound.domain.model.ItemType
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -54,7 +56,6 @@ class GameViewModel(
         this.playerWidthPx = playerWidthPx
         this.playerHeightPx = playerHeightPx
 
-        // init playerX once (or when screen changes)
         _state.update { s ->
             val initX = (wPx * initialPlayerXRatio)
                 .coerceIn(0f, max(0f, wPx - playerWidthPx))
@@ -78,7 +79,6 @@ class GameViewModel(
                     tick(dtSec)
                 }
 
-                // small delay to avoid burning CPU (still smooth enough)
                 delay(16L)
             }
         }
@@ -98,8 +98,7 @@ class GameViewModel(
     }
 
     fun onBackgrounded() {
-        val s = _state.value
-        if (!s.isGameOver) pause()
+        if (!_state.value.isGameOver) pause()
     }
 
     fun onDrag(deltaX: Float) {
@@ -118,13 +117,11 @@ class GameViewModel(
     }
 
     fun playAgain() {
-        // save current score (if > 0)
         val score = _state.value.score
         if (score > 0) {
             viewModelScope.launch { recordsRepository.addScore(score) }
         }
 
-        // reset game state
         _state.update { old ->
             val initX = (screenWpx * initialPlayerXRatio)
                 .coerceIn(0f, max(0f, screenWpx - playerWidthPx))
@@ -148,21 +145,16 @@ class GameViewModel(
         }
     }
 
-    // --- core game logic tick ---
     private fun tick(dtSec: Float) {
         val dtMs = (dtSec * 1000f).toLong().coerceAtLeast(0L)
 
-        // 1) spawn
         spawnAccMs += dtMs
         if (spawnAccMs >= spawnIntervalMs) {
             spawnAccMs = 0L
             spawnItem()
         }
 
-        // 2) move items
         moveItems(dtSec)
-
-        // 3) collisions + rules
         resolveCollisions()
     }
 

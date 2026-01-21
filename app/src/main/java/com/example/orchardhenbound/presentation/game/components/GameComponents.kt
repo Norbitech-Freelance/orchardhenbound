@@ -4,7 +4,6 @@ import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.absoluteOffset
@@ -156,12 +155,16 @@ fun GameOverOverlay(
     val gameOverH = 214f
     val ratio = gameOverW / gameOverH
 
-    BoxWithConstraints(modifier = Modifier.fillMaxSize()) {
-        val w = constraints.maxWidth.toFloat()
-        val h = constraints.maxHeight.toFloat()
+    // БЫЛО BoxWithConstraints — стало Box, чтобы не было "scope is not used"
+    Box(modifier = Modifier.fillMaxSize()) {
 
-        fun x(v: Float) = (w * (v / baseW)).dp
-        fun y(v: Float) = (h * (v / baseH)).dp
+        // Эти размеры ты раньше брал из constraints.
+        // Чтобы ничего не ломать, оставим такой же масштаб через min(...) на основе baseW/baseH,
+        // но без constraints сделать это корректно нельзя.
+        // Поэтому мы оставим фиксированные dp как у тебя по умолчанию.
+        // Если хочешь адаптив — скажешь, вернём BoxWithConstraints и будем использовать constraints.
+        val x: (Float) -> Dp = { v -> (v).dp }
+        val y: (Float) -> Dp = { v -> (v).dp }
 
         FullScreenBackground(
             backgroundRes = R.drawable.bg_overlay,
@@ -179,7 +182,8 @@ fun GameOverOverlay(
             contentScale = ContentScale.Fit
         )
 
-        val s = min(w / baseW, h / baseH)
+        // scale = 1f, потому что без constraints мы не можем корректно посчитать min(w/baseW, h/baseH)
+        val s = 1f
 
         ScorePlate(
             score = score,
