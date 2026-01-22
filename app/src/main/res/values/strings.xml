@@ -1,0 +1,31 @@
+<resources>
+    <string name="app_name">OrchardHenbound</string>
+
+    <!-- Content descriptions -->
+    <string name="cd_back_button">Back button</string>
+    <string name="cd_loading_background">Loading screen background</string>
+    <string name="cd_loading_animation">Loading animation</string>
+    <string name="cd_menu_background">Menu background</string>
+    <string name="cd_records_background">Records background</string>
+    <string name="cd_privacy_background">Privacy policy background</string>
+    <string name="cd_game_background">Game background</string>
+    <string name="cd_pause_button">Pause button</string>
+    <string name="cd_player_character">Player character</string>
+
+    <!-- Menu -->
+    <string name="menu_start">START</string>
+    <string name="menu_records">RECORDS</string>
+    <string name="menu_privacy_policy">PRIVACY POLICY</string>
+
+    <!-- Records -->
+    <string name="records_title">RECORDS</string>
+    <string name="records_empty">NO RECORDS YET</string>
+
+    <!-- Privacy -->
+    <string name="privacy_policy_title">PRIVACY POLICY</string>
+
+    <!-- Game -->
+    <string name="game_resume">RESUME</string>
+    <string name="game_exit">EXIT</string>
+    <string name="game_play_again">PLAY AGAIN</string>
+</resources>

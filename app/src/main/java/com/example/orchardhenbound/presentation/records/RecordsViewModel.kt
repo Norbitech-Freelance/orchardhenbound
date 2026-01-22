@@ -1,0 +1,22 @@
+package com.example.orchardhenbound.presentation.records
+
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.example.orchardhenbound.domain.model.Record
+import com.example.orchardhenbound.domain.repository.RecordsRepository
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.stateIn
+
+class RecordsViewModel(
+    private val recordsRepository: RecordsRepository
+) : ViewModel() {
+
+    val records: StateFlow<List<Record>> = recordsRepository
+        .observeTopRecords(limit = 10)
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5000),
+            initialValue = emptyList()
+        )
+}
