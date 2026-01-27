@@ -1,6 +1,6 @@
 package com.example.orchardhenbound.data.repository
 
-import com.example.orchardhenbound.domain.Record
+import com.example.orchardhenbound.domain.model.Record
 import kotlinx.coroutines.flow.Flow
 
 interface RecordsRepository {

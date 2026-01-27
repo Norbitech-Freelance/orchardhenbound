@@ -2,10 +2,11 @@ package com.example.orchardhenbound.presentation.privacy
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -31,24 +32,33 @@ fun PrivacyPolicyScreen(onBack: () -> Unit) {
             contentDescription = stringResource(R.string.cd_privacy_background)
         )
 
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(start = 24.dp, end = 24.dp, top = 60.dp)
-                .height(60.dp),
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            BackButton(onClick = onBack)
+        BoxWithConstraints(modifier = Modifier.fillMaxSize()) {
+            val baseW = 412f
+            val baseH = 917f
 
-            StrokeText(
-                text = stringResource(R.string.privacy_policy_title),
-                fontFamily = BalooFontFamily,
-                fontSize = 40.sp,
-                fillBrush = Brush.linearGradient(listOf(PLATE_TOP, PLATE_BOTTOM)),
-                strokeColor = STROKE_PRIMARY,
-                strokeWidth = 6f
-            )
+            val topOffset = maxHeight * (60f / baseH)
+            val leftOffset = maxWidth * (24f / baseW)
+            val rightOffset = maxWidth * (24f / baseW)
+
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .offset(y = topOffset)
+                    .padding(start = leftOffset, end = rightOffset),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                BackButton(onClick = onBack)
+
+                StrokeText(
+                    text = stringResource(R.string.privacy_policy_title),
+                    fontFamily = BalooFontFamily,
+                    fontSize = 40.sp,
+                    fillBrush = Brush.linearGradient(listOf(PLATE_TOP, PLATE_BOTTOM)),
+                    strokeColor = STROKE_PRIMARY,
+                    strokeWidth = 1f
+                )
+            }
         }
     }
 }

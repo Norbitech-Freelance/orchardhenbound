@@ -1,12 +1,12 @@
 package com.example.orchardhenbound.presentation.menu
 
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.width
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -28,25 +28,41 @@ fun MenuScreen(
             contentDescription = stringResource(R.string.cd_menu_background)
         )
 
-        Column(
-            modifier = Modifier.align(Alignment.Center),
-            verticalArrangement = Arrangement.spacedBy(16.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Spacer(modifier = Modifier.weight(1f))
+        BoxWithConstraints(modifier = Modifier.fillMaxSize()) {
+            val baseH = 917f
+            val buttonsTop = maxHeight * (450f / baseH)
 
-            CustomButton(
-                text = stringResource(R.string.menu_start),
-                onClick = onStart
-            )
-            CustomButton(
-                text = stringResource(R.string.menu_records),
-                onClick = onRecords
-            )
-            CustomButton(
-                text = stringResource(R.string.menu_privacy_policy),
-                onClick = onPrivacy
-            )
+            Column(
+                modifier = Modifier.fillMaxSize(),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Spacer(modifier = Modifier.height(buttonsTop))
+
+                CustomButton(
+                    text = stringResource(R.string.menu_start),
+                    onClick = onStart,
+                    modifier = Modifier.fillMaxWidth(0.63f),
+                    height = 80.dp
+                )
+
+                Spacer(modifier = Modifier.height(20.dp))
+
+                CustomButton(
+                    text = stringResource(R.string.menu_records),
+                    onClick = onRecords,
+                    modifier = Modifier.fillMaxWidth(0.63f),
+                    height = 80.dp
+                )
+
+                Spacer(modifier = Modifier.height(20.dp))
+
+                CustomButton(
+                    text = stringResource(R.string.menu_privacy_policy),
+                    onClick = onPrivacy,
+                    modifier = Modifier.fillMaxWidth(0.63f),
+                    height = 80.dp
+                )
+            }
         }
     }
 }

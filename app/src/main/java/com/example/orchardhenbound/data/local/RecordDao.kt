@@ -17,4 +17,14 @@ interface RecordDao {
 
     @Query("DELETE FROM records")
     suspend fun clear()
+
+    // Новые методы для топ-6
+    @Query("SELECT COUNT(*) FROM records WHERE score > 0")
+    suspend fun getRecordsCount(): Int
+
+    @Query("SELECT MIN(score) FROM records WHERE score > 0")
+    suspend fun getMinScore(): Int?
+
+    @Query("DELETE FROM records WHERE id IN (SELECT id FROM records WHERE score > 0 ORDER BY score ASC, createdAt ASC LIMIT 1)")
+    suspend fun deleteWorstRecord()
 }

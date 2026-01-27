@@ -17,10 +17,15 @@ import com.example.orchardhenbound.R
 fun HeartsRow(
     lives: Int,
     maxLives: Int = 3,
-    heartSize: Dp = 28.dp,
-    gap: Dp = 6.dp,
+    totalWidth: Dp = 136.dp,
+    heartHeight: Dp = 33.dp,
     modifier: Modifier = Modifier
 ) {
+
+    val heartSize = heartHeight // 33dp
+    val totalGapSpace = totalWidth - (heartSize * maxLives)
+    val gap = if (maxLives > 1) totalGapSpace / (maxLives - 1) else 0.dp
+
     Row(
         modifier = modifier,
         horizontalArrangement = Arrangement.spacedBy(gap),

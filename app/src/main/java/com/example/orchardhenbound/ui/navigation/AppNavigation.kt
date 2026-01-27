@@ -35,9 +35,21 @@ fun AppNavigation() {
 
         composable(AppScreen.Menu.route) {
             MenuScreen(
-                onStart = { navController.navigate(AppScreen.Game.route) },
-                onRecords = { navController.navigate(AppScreen.Records.route) },
-                onPrivacy = { navController.navigate(AppScreen.Privacy.route) }
+                onStart = {
+                    navController.navigate(AppScreen.Game.route) {
+                        launchSingleTop = true
+                    }
+                },
+                onRecords = {
+                    navController.navigate(AppScreen.Records.route) {
+                        launchSingleTop = true
+                    }
+                },
+                onPrivacy = {
+                    navController.navigate(AppScreen.Privacy.route) {
+                        launchSingleTop = true
+                    }
+                }
             )
         }
 
@@ -47,7 +59,9 @@ fun AppNavigation() {
                 viewModel = gameViewModel,
                 onExitToMenu = {
                     navController.navigate(AppScreen.Menu.route) {
-                        popUpTo(navController.graph.findStartDestination().id) { saveState = true }
+                        popUpTo(navController.graph.findStartDestination().id) {
+                            saveState = true
+                        }
                         launchSingleTop = true
                         restoreState = true
                     }
@@ -59,13 +73,21 @@ fun AppNavigation() {
             val recordsViewModel: RecordsViewModel = koinViewModel()
             RecordsScreen(
                 viewModel = recordsViewModel,
-                onBack = { navController.popBackStack() }
+                onBack = {
+                    if (navController.currentBackStackEntry != null) {
+                        navController.popBackStack()
+                    }
+                }
             )
         }
 
         composable(AppScreen.Privacy.route) {
             PrivacyPolicyScreen(
-                onBack = { navController.popBackStack() }
+                onBack = {
+                    if (navController.currentBackStackEntry != null) {
+                        navController.popBackStack()
+                    }
+                }
             )
         }
     }

@@ -11,6 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.StrokeJoin
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.layout.ContentScale
@@ -36,8 +37,8 @@ fun ScorePlate(
 ) {
     val gradient = Brush.verticalGradient(
         listOf(
-            MaterialTheme.colorScheme.secondary,
-            MaterialTheme.colorScheme.primary
+            Color(0xFFFFE154),
+            Color(0xFFFFB52C)
         )
     )
 
@@ -63,7 +64,7 @@ fun ScorePlate(
         Text(
             text = score.toString(),
             style = baseStyle.copy(
-                color = MaterialTheme.colorScheme.primary,
+                color = Color(0xFFFFB52C),
                 drawStyle = Stroke(width = strokeWidthPx, join = StrokeJoin.Round)
             )
         )

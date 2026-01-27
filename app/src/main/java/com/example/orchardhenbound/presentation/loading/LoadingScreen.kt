@@ -1,7 +1,6 @@
 package com.example.orchardhenbound.presentation.loading
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.offset
@@ -10,9 +9,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import com.example.orchardhenbound.R
@@ -21,7 +20,6 @@ import kotlinx.coroutines.delay
 
 @Composable
 fun LoadingScreen(onFinished: () -> Unit) {
-    // Animation frames for logo (loading_1 -> loading_2 -> loading_3)
     val frames = listOf(
         R.drawable.loading_1,
         R.drawable.loading_2,
@@ -39,39 +37,27 @@ fun LoadingScreen(onFinished: () -> Unit) {
         onFinished()
     }
 
-    // Base design dimensions from Figma
-    val baseW = 412f
-    val baseH = 917f
-
-    // Logo dimensions and position
-    val logoW = 154f
-    val logoH = 25f
-    val logoTop = 446f
-    val logoLeft = 129f
-
     BoxWithConstraints(modifier = Modifier.fillMaxSize()) {
-        val density = LocalDensity.current
+        val baseW = 412f
+        val baseH = 917f
 
-        val screenW = with(density) { maxWidth.toPx() }
-        val screenH = with(density) { maxHeight.toPx() }
+        val logoWidth = maxWidth * (154f / baseW)
+        val logoHeight = maxHeight * (25f / baseH)
+        val logoLeft = maxWidth * (129f / baseW)
+        val logoTop = maxHeight * (446f / baseH)
 
-        // Adaptive scaling functions
-        fun scaleX(v: Float) = with(density) { (screenW * (v / baseW)).toDp() }
-        fun scaleY(v: Float) = with(density) { (screenH * (v / baseH)).toDp() }
-
-        // Background
         FullScreenBackground(
             backgroundRes = R.drawable.bg_loading,
             contentDescription = stringResource(R.string.cd_loading_background)
         )
 
-        // Animated logo (154×25 at position 129, 446)
         Image(
             painter = painterResource(frames[frameIndex.intValue]),
             contentDescription = stringResource(R.string.cd_loading_animation),
             modifier = Modifier
-                .offset(x = scaleX(logoLeft), y = scaleY(logoTop))
-                .size(width = scaleX(logoW), height = scaleY(logoH)),
+                .align(Alignment.TopStart)
+                .offset(x = logoLeft, y = logoTop)
+                .size(width = logoWidth, height = logoHeight),
             contentScale = ContentScale.Fit
         )
     }

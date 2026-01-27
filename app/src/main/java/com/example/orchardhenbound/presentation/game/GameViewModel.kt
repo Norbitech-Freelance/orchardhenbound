@@ -2,7 +2,7 @@ package com.example.orchardhenbound.presentation.game
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.orchardhenbound.domain.repository.RecordsRepository
+import com.example.orchardhenbound.data.repository.RecordsRepository
 import com.example.orchardhenbound.presentation.game.model.FallingItem
 import com.example.orchardhenbound.presentation.game.model.ItemType
 import kotlinx.coroutines.Job
@@ -19,7 +19,6 @@ class GameViewModel(
     private val recordsRepository: RecordsRepository
 ) : ViewModel() {
 
-    // --- constants (rules) ---
     private val maxLives = 3
     private val goodItemProbability = 0.75f
     private val spawnIntervalMs = 650L
@@ -34,7 +33,6 @@ class GameViewModel(
 
     private var loopJob: Job? = null
 
-    // used for physics/spawn
     private var screenWpx: Float = 0f
     private var screenHpx: Float = 0f
     private var itemSizePx: Float = 0f
@@ -122,11 +120,26 @@ class GameViewModel(
             viewModelScope.launch { recordsRepository.addScore(score) }
         }
 
-        _state.update { old ->
-            val initX = (screenWpx * initialPlayerXRatio)
-                .coerceIn(0f, max(0f, screenWpx - playerWidthPx))
-            spawnAccMs = 0L
-            old.copy(
+        resetGame()
+    }
+
+    fun exitToMenuSaveScoreIfNeeded() {
+        val score = _state.value.score
+        if (score > 0) {
+            viewModelScope.launch { recordsRepository.addScore(score) }
+        }
+
+        resetGame()
+    }
+
+    private fun resetGame() {
+        val initX = (screenWpx * initialPlayerXRatio)
+            .coerceIn(0f, max(0f, screenWpx - playerWidthPx))
+
+        spawnAccMs = 0L
+
+        _state.update {
+            it.copy(
                 isPaused = false,
                 isGameOver = false,
                 lives = maxLives,
@@ -135,13 +148,6 @@ class GameViewModel(
                 facingRight = true,
                 playerX = initX
             )
-        }
-    }
-
-    fun exitToMenuSaveScoreIfNeeded() {
-        val score = _state.value.score
-        if (score > 0) {
-            viewModelScope.launch { recordsRepository.addScore(score) }
         }
     }
 

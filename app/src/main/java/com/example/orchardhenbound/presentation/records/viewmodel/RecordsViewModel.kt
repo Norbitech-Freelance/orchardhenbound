@@ -3,7 +3,7 @@ package com.example.orchardhenbound.presentation.records.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.orchardhenbound.data.repository.RecordsRepository
-import com.example.orchardhenbound.domain.Record
+import com.example.orchardhenbound.domain.model.Record
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.stateIn
