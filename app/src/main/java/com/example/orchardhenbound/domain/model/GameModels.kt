@@ -11,7 +11,6 @@ enum class ItemType {
 }
 
 data class FallingItem(
-    val id: Long,
     val type: ItemType,
     val xPx: Float,
     val yPx: Float,

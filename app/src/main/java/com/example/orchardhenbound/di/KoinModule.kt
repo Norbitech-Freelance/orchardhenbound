@@ -5,9 +5,9 @@ import com.example.orchardhenbound.data.local.AppDatabase
 import com.example.orchardhenbound.data.repository.RecordsRepository
 import com.example.orchardhenbound.data.repository.RecordsRepositoryImpl
 import com.example.orchardhenbound.presentation.game.GameViewModel
-import com.example.orchardhenbound.presentation.records.RecordsViewModel
+import com.example.orchardhenbound.presentation.records.viewmodel.RecordsViewModel
 import org.koin.android.ext.koin.androidContext
-import org.koin.androidx.viewmodel.dsl.viewModel
+import org.koin.androidx.viewmodel.dsl.viewModelOf
 import org.koin.dsl.module
 
 val appModule = module {
@@ -16,14 +16,17 @@ val appModule = module {
         Room.databaseBuilder(
             androidContext(),
             AppDatabase::class.java,
-            "orchard_db"
-        ).build()
+            "orchard_db_v2" // новое имя, чтобы создать чистую БД
+        )
+            .fallbackToDestructiveMigration()
+            .build()
     }
+
 
     single { get<AppDatabase>().recordDao() }
 
     single<RecordsRepository> { RecordsRepositoryImpl(get()) }
 
-    viewModel { GameViewModel(get<RecordsRepository>()) }
-    viewModel { RecordsViewModel(get<RecordsRepository>()) }
+    viewModelOf(::GameViewModel)
+    viewModelOf(::RecordsViewModel)
 }

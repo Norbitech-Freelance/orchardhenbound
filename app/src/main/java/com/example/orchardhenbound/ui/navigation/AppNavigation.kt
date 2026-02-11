@@ -5,13 +5,13 @@ import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.orchardhenbound.presentation.records.viewmodel.RecordsViewModel
 import com.example.orchardhenbound.presentation.game.GameScreen
 import com.example.orchardhenbound.presentation.game.GameViewModel
 import com.example.orchardhenbound.presentation.loading.LoadingScreen
 import com.example.orchardhenbound.presentation.menu.MenuScreen
 import com.example.orchardhenbound.presentation.privacy.PrivacyPolicyScreen
 import com.example.orchardhenbound.presentation.records.RecordsScreen
-import com.example.orchardhenbound.presentation.records.RecordsViewModel
 import org.koin.androidx.compose.koinViewModel
 
 @Composable

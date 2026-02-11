@@ -21,10 +21,15 @@ fun HeartsRow(
     heartHeight: Dp = 33.dp,
     modifier: Modifier = Modifier
 ) {
-
     val heartSize = heartHeight // 33dp
     val totalGapSpace = totalWidth - (heartSize * maxLives)
-    val gap = if (maxLives > 1) totalGapSpace / (maxLives - 1) else 0.dp
+
+    // не даём gap уйти в минус
+    val gap = if (maxLives > 1) {
+        (totalGapSpace / (maxLives - 1)).coerceAtLeast(0.dp)
+    } else {
+        0.dp
+    }
 
     Row(
         modifier = modifier,

@@ -4,8 +4,6 @@ import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.height
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -16,6 +14,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.orchardhenbound.R
+import com.example.orchardhenbound.ui.theme.BalooFontFamily
 import com.example.orchardhenbound.ui.theme.TEXT_FILL_LIGHT_BOTTOM
 import com.example.orchardhenbound.ui.theme.TEXT_FILL_LIGHT_TOP
 import com.example.orchardhenbound.utils.extensions.clickableNoRipple
@@ -29,7 +28,8 @@ fun CustomButton(
     height: Dp = 80.dp,
     fillBrush: Brush? = null
 ) {
-    val textStyle = MaterialTheme.typography.titleLarge.copy(fontSize = 24.sp)
+    val fontFamily = BalooFontFamily
+    val fontSize = 24.sp
 
     val defaultFill = Brush.verticalGradient(
         colors = listOf(TEXT_FILL_LIGHT_TOP, TEXT_FILL_LIGHT_BOTTOM)
@@ -49,9 +49,12 @@ fun CustomButton(
             contentScale = ContentScale.FillBounds
         )
 
-        Text(
+        StrokeText(
             text = text,
-            style = textStyle.copy(brush = finalFill)
+            fontFamily = fontFamily,
+            fontSize = fontSize,
+            fillBrush = finalFill,
+            strokeWidth = 6f
         )
     }
 }

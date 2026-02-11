@@ -2,8 +2,8 @@ package com.example.orchardhenbound.utils
 
 import androidx.annotation.DrawableRes
 import com.example.orchardhenbound.R
-import com.example.orchardhenbound.presentation.game.model.FallingItem
-import com.example.orchardhenbound.presentation.game.model.ItemType
+import com.example.orchardhenbound.domain.model.FallingItem
+import com.example.orchardhenbound.domain.model.ItemType
 
 @DrawableRes
 fun ItemType.getDrawableRes(): Int = when (this) {

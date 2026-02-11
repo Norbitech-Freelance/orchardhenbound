@@ -1,6 +1,6 @@
 package com.example.orchardhenbound.presentation.game
 
-import com.example.orchardhenbound.presentation.game.model.FallingItem
+import com.example.orchardhenbound.domain.model.FallingItem
 
 data class GameUiState(
     val isPaused: Boolean = false,

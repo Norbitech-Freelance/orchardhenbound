@@ -1,4 +1,4 @@
-package com.example.orchardhenbound.presentation.game.components
+package com.example.orchardhenbound.presentation.records.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
@@ -24,6 +25,9 @@ import com.example.orchardhenbound.ui.theme.BalooFontFamily
 import com.example.orchardhenbound.ui.theme.PLATE_BOTTOM
 import com.example.orchardhenbound.ui.theme.PLATE_TOP
 import com.example.orchardhenbound.ui.theme.STROKE_PRIMARY
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 @Composable
 fun RecordPlate(
@@ -40,10 +44,14 @@ fun RecordPlate(
         )
     )
 
-    // Градиент для текста - используем ACCENT из темы
     val textBrush = Brush.linearGradient(
         colors = listOf(ACCENT_TOP, ACCENT_BOTTOM)
     )
+
+    val formattedDate = remember(record.createdAt) {
+        val sdf = SimpleDateFormat("dd.MM", Locale.getDefault())
+        sdf.format(Date(record.createdAt))
+    }
 
     Box(
         modifier = Modifier
@@ -65,7 +73,7 @@ fun RecordPlate(
         ) {
             // Дата слева
             StrokeText(
-                text = record.date,
+                text = formattedDate,
                 fontFamily = BalooFontFamily,
                 fontSize = 32.sp,
                 fillBrush = textBrush,
@@ -73,7 +81,7 @@ fun RecordPlate(
                 strokeWidth = 1f
             )
 
-            // Счет справа
+            // Счёт справа
             StrokeText(
                 text = record.score.toString(),
                 fontFamily = BalooFontFamily,

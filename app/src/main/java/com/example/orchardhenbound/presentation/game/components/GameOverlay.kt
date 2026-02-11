@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import com.example.orchardhenbound.core.Constants
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -36,8 +37,8 @@ fun GameOverOverlay(
     onExit: () -> Unit
 ) {
     BoxWithConstraints(modifier = Modifier.fillMaxSize()) {
-        val baseW = 412f
-        val baseH = 917f
+        val baseW = Constants.BASE_WIDTH
+        val baseH = Constants.BASE_HEIGHT
 
         val gameOverPlateWidth = maxWidth * (280.19f / baseW)
         val gameOverPlateHeight = maxHeight * (214f / baseH)

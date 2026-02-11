@@ -7,11 +7,11 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.offset
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
+import com.example.orchardhenbound.core.Constants
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -23,7 +23,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.example.orchardhenbound.R
 import com.example.orchardhenbound.presentation.game.GameViewModel
-import com.example.orchardhenbound.presentation.game.model.ItemType
+import com.example.orchardhenbound.domain.model.ItemType
 import com.example.orchardhenbound.utils.extensions.clickableNoRipple
 
 private const val MAX_LIVES = 3
@@ -63,7 +63,7 @@ fun GameContent(
     ) {
         val screenWpx = with(density) { maxWidth.toPx() }
         val screenHpx = with(density) { maxHeight.toPx() }
-        val itemSizePx = with(density) { 40.dp.toPx() }  // ИЗМЕНЕНО: 60 → 40
+        val itemSizePx = with(density) { 40.dp.toPx() }
         val playerWidthPx = with(density) { 120.dp.toPx() }
         val playerHeightPx = with(density) { 120.dp.toPx() }
 
@@ -79,28 +79,23 @@ fun GameContent(
             }
         }
 
-        // Адаптивные позиции для UI элементов
-        val baseW = 412f
-        val baseH = 917f
+        val baseW = Constants.BASE_WIDTH
+        val baseH = Constants.BASE_HEIGHT
 
-        // Пауза и сердечки на одной высоте
         val uiTop = maxHeight * (60f / baseH)
         val uiLeft = maxWidth * (24f / baseW)
         val uiRight = maxWidth * (24f / baseW)
 
-        // ScorePlate
         val scorePlateWidth = maxWidth * (120f / baseW)
         val scorePlateLeft = maxWidth * (146f / baseW)
         val scorePlateTop = maxHeight * (150f / baseH)
 
-        // Сердечки
         val heartsWidth = maxWidth * (136f / baseW)
         val heartsHeight = maxHeight * (33f / baseH)
 
-        // Адаптивный размер предметов
-        val itemSize = maxWidth * (40f / baseW)  // ДОБАВЛЕНО: 40/412 = 9.7%
+        val itemSize = maxWidth * (40f / baseW)
 
-        // СНАЧАЛА падающие предметы (ниже по z-order)
+        // Падающие предметы
         state.items.forEach { item ->
             val res = when (item.type) {
                 ItemType.GOOD_1 -> R.drawable.item_good_1
@@ -116,7 +111,7 @@ fun GameContent(
                 painter = painterResource(id = res),
                 contentDescription = null,
                 modifier = Modifier
-                    .size(itemSize)  // ИЗМЕНЕНО: 60.dp → адаптивный itemSize
+                    .size(itemSize)
                     .align(Alignment.TopStart)
                     .offset(
                         x = with(density) { item.xPx.toDp() },
@@ -126,7 +121,7 @@ fun GameContent(
             )
         }
 
-        // Персонаж (курица)
+        // Персонаж
         val playerRes = if (state.facingRight) {
             R.drawable.player_right
         } else {
@@ -149,9 +144,7 @@ fun GameContent(
             contentScale = ContentScale.Fit
         )
 
-        // ПОТОМ UI элементы (сверху по z-order)
-
-        // Кнопка паузы (слева, top 60, left 24)
+        // Кнопка паузы
         Box(
             modifier = Modifier
                 .align(Alignment.TopStart)
@@ -167,7 +160,7 @@ fun GameContent(
             )
         }
 
-        // Сердечки (справа, top 60, right 24)
+        // Сердечки
         HeartsRow(
             lives = state.lives,
             maxLives = MAX_LIVES,
@@ -178,7 +171,7 @@ fun GameContent(
                 .offset(x = -uiRight, y = uiTop)
         )
 
-        // Счет (адаптивная позиция)
+        // Счёт
         ScorePlate(
             score = state.score,
             width = scorePlateWidth,

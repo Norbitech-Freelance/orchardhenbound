@@ -2,12 +2,11 @@ package com.example.orchardhenbound.presentation.records
 
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.layout.Arrangement
+import com.example.orchardhenbound.domain.model.Record
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
@@ -22,14 +21,14 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.orchardhenbound.R
-import com.example.orchardhenbound.domain.model.Record
 import com.example.orchardhenbound.presentation.components.FullScreenBackground
 import com.example.orchardhenbound.presentation.components.StrokeText
+import com.example.orchardhenbound.presentation.game.components.TopBarRow
+import com.example.orchardhenbound.presentation.records.components.RecordPlate
+import com.example.orchardhenbound.presentation.records.viewmodel.RecordsViewModel
 import com.example.orchardhenbound.ui.theme.ACCENT_BOTTOM
 import com.example.orchardhenbound.ui.theme.ACCENT_TOP
 import com.example.orchardhenbound.ui.theme.STROKE_PRIMARY
-import com.example.orchardhenbound.presentation.game.components.RecordPlate
-import com.example.orchardhenbound.presentation.game.components.TopBarRow
 
 @Composable
 fun RecordsScreen(
@@ -90,12 +89,14 @@ private fun RecordsContent(
                         .fillMaxWidth()
                         .padding(start = 24.dp, end = 24.dp, top = 40.dp),
                     horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.spacedBy(16.dp)
+                    verticalArrangement = Arrangement.spacedBy(16.dp),
+                    contentPadding = androidx.compose.foundation.layout.PaddingValues(
+                        bottom = 24.dp
+                    )
                 ) {
                     itemsIndexed(records) { index, record ->
                         RecordPlate(record = record, dimmed = index >= 3)
                     }
-                    item { Spacer(modifier = Modifier.height(24.dp)) }
                 }
             }
         }

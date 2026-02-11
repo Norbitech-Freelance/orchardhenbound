@@ -15,10 +15,6 @@ interface RecordDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(record: RecordEntity)
 
-    @Query("DELETE FROM records")
-    suspend fun clear()
-
-    // Новые методы для топ-6
     @Query("SELECT COUNT(*) FROM records WHERE score > 0")
     suspend fun getRecordsCount(): Int
 

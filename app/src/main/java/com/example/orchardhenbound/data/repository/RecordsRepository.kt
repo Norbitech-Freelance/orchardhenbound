@@ -6,5 +6,4 @@ import kotlinx.coroutines.flow.Flow
 interface RecordsRepository {
     fun observeTopRecords(limit: Int): Flow<List<Record>>
     suspend fun addScore(score: Int)
-    suspend fun clearAllRecords()
 }

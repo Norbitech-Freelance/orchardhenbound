@@ -3,8 +3,8 @@ package com.example.orchardhenbound.presentation.game
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.orchardhenbound.data.repository.RecordsRepository
-import com.example.orchardhenbound.presentation.game.model.FallingItem
-import com.example.orchardhenbound.presentation.game.model.ItemType
+import com.example.orchardhenbound.domain.model.FallingItem
+import com.example.orchardhenbound.domain.model.ItemType
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -183,7 +183,6 @@ class GameViewModel(
         val speed = 250f + Random.nextFloat() * 220f
 
         val item = FallingItem(
-            id = System.nanoTime(),
             type = type,
             xPx = x,
             yPx = -itemSizePx,
