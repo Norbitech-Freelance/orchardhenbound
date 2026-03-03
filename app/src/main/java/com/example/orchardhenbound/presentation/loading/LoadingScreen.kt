@@ -1,17 +1,8 @@
-<<<<<<< HEAD
 @file:Suppress("COMPOSE_APPLIER_CALL_MISMATCH")
-
-=======
->>>>>>> 9934ae4c0a8beaca4a779d9d471a4b4300bcf9a8
 package com.example.orchardhenbound.presentation.loading
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.Image
-<<<<<<< HEAD
-//import androidx.compose.foundation.layout.Box
-=======
-import androidx.compose.foundation.layout.Box
->>>>>>> 9934ae4c0a8beaca4a779d9d471a4b4300bcf9a8
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
@@ -53,11 +44,7 @@ fun LoadingScreen(onFinished: () -> Unit) {
     }
 
     val baseW = 412f
-<<<<<<< HEAD
-   // val baseH = 892f
-=======
-    val baseH = 892f
->>>>>>> 9934ae4c0a8beaca4a779d9d471a4b4300bcf9a8
+
     val loadingW = 152f
     val loadingH = 24f
     val ratio = loadingW / loadingH
@@ -66,11 +53,6 @@ fun LoadingScreen(onFinished: () -> Unit) {
         val density = LocalDensity.current
 
         val screenW = with(density) { maxWidth.toPx() }
-<<<<<<< HEAD
-       // val screenH = with(density) { maxHeight.toPx() }
-=======
-        val screenH = with(density) { maxHeight.toPx() }
->>>>>>> 9934ae4c0a8beaca4a779d9d471a4b4300bcf9a8
 
         fun x(v: Float) = (screenW * (v / baseW)).dp
 

@@ -10,18 +10,13 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.orchardhenbound.R
 import com.example.orchardhenbound.presentation.components.BackButton
 import com.example.orchardhenbound.presentation.components.FullScreenBackground
-import com.example.orchardhenbound.presentation.components.StrokeText
-import com.example.orchardhenbound.ui.theme.BalooFontFamily
-import com.example.orchardhenbound.ui.theme.PLATE_BOTTOM
-import com.example.orchardhenbound.ui.theme.PLATE_TOP
-import com.example.orchardhenbound.ui.theme.STROKE_PRIMARY
+import com.example.orchardhenbound.presentation.components.TitleOutlinedText
 
 @Composable
 fun PrivacyPolicyScreen(onBack: () -> Unit) {
@@ -34,20 +29,16 @@ fun PrivacyPolicyScreen(onBack: () -> Unit) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(start = 24.dp, end = 24.dp, top = 60.dp)
-                .height(60.dp),
+                .padding(start = 24.dp, end = 24.dp, top = 60.dp),
+                //.height(60.dp),
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
             BackButton(onClick = onBack)
 
-            StrokeText(
+            TitleOutlinedText(
                 text = stringResource(R.string.privacy_policy_title),
-                fontFamily = BalooFontFamily,
-                fontSize = 40.sp,
-                fillBrush = Brush.linearGradient(listOf(PLATE_TOP, PLATE_BOTTOM)),
-                strokeColor = STROKE_PRIMARY,
-                strokeWidth = 6f
+                maxFontSize = 40.sp
             )
         }
     }

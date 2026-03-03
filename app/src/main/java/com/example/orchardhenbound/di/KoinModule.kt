@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 @file:Suppress("DEPRECATION")
-
-=======
->>>>>>> 9934ae4c0a8beaca4a779d9d471a4b4300bcf9a8
 package com.example.orchardhenbound.di
 
 import androidx.room.Room

@@ -9,23 +9,16 @@ import androidx.compose.ui.unit.sp
 import com.example.orchardhenbound.R
 
 val BalooFontFamily = FontFamily(
-    Font(resId = R.font.baloo_regular, weight = FontWeight.W400)
+    Font(R.font.baloo_regular, FontWeight.Normal)
 )
 
 val Typography = Typography(
-    // Use this in buttons (28sp by default)
-    titleLarge = TextStyle(
+    bodyLarge = TextStyle(
         fontFamily = BalooFontFamily,
-        fontWeight = FontWeight.W400,
-        fontSize = 28.sp,
-        lineHeight = 28.sp
-    ),
-
-    // Use this for big headers like "RECORDS" / "PRIVACY POLICY"
-    headlineLarge = TextStyle(
-        fontFamily = BalooFontFamily,
-        fontWeight = FontWeight.W400,
-        fontSize = 40.sp,
-        lineHeight = 40.sp
+        fontWeight = FontWeight.Normal,
+        fontSize = 16.sp,
+        lineHeight = 24.sp,
+        letterSpacing = 0.5.sp
     )
+
 )

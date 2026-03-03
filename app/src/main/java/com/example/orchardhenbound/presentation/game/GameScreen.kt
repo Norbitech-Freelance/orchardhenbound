@@ -1,3 +1,5 @@
+@file:Suppress("COMPOSE_APPLIER_CALL_MISMATCH")
+
 package com.example.orchardhenbound.presentation.game
 
 import androidx.activity.compose.BackHandler
@@ -21,13 +23,12 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.dp
 import com.example.orchardhenbound.R
 import com.example.orchardhenbound.presentation.components.FullScreenBackground
 import com.example.orchardhenbound.presentation.game.components.GameOverOverlay
 import com.example.orchardhenbound.presentation.game.components.HeartsRow
 import com.example.orchardhenbound.presentation.game.components.PauseOverlay
-import com.example.orchardhenbound.presentation.game.components.ScorePlate
+import com.example.orchardhenbound.presentation.components.ScorePlate
 import com.example.orchardhenbound.utils.getDrawableRes
 import com.example.orchardhenbound.utils.extensions.clickableNoRipple
 import com.example.orchardhenbound.utils.extensions.offsetPx
@@ -42,13 +43,11 @@ fun GameScreen(
 ) {
     val state by viewModel.state.collectAsState()
 
-    // start loop once while screen alive
     DisposableEffect(Unit) {
         viewModel.startLoop()
-        onDispose { /* optional: viewModel.stopLoop() */ }
+        onDispose {}
     }
 
-    // Back handler like before
     BackHandler(enabled = !state.isGameOver) {
         if (!state.isPaused) {
             viewModel.pause()
@@ -61,14 +60,22 @@ fun GameScreen(
     BoxWithConstraints(modifier = Modifier.fillMaxSize()) {
         val density = LocalDensity.current
 
-        val wPx = with(density) { maxWidth.toPx() }
-        val hPx = with(density) { maxHeight.toPx() }
+        val screenWidthDp = maxWidth
+        val screenHeightDp = maxHeight
 
-        val itemSizeDp = 46.dp
+        val wPx = with(density) { screenWidthDp.toPx() }
+        val hPx = with(density) { screenHeightDp.toPx() }
+
+        val itemSizeDp = screenWidthDp * 0.11f
+        val playerWidthDp = screenWidthDp * 0.17f
+        val playerHeightDp = screenHeightDp * 0.11f
+        val pauseButtonSize = screenWidthDp * 0.14f
+        val horizontalPadding = screenWidthDp * 0.04f
+        val topBarPadding = screenHeightDp * 0.06f
+        val scoreTopPadding = screenHeightDp * 0.11f
+        val playerYOffsetRatio = 0.78f
+
         val itemSizePx = with(density) { itemSizeDp.toPx() }
-
-        val playerWidthDp = 69.dp
-        val playerHeightDp = 100.dp
         val playerWidthPx = with(density) { playerWidthDp.toPx() }
         val playerHeightPx = with(density) { playerHeightDp.toPx() }
 
@@ -82,13 +89,11 @@ fun GameScreen(
             )
         }
 
-        // Background
         FullScreenBackground(
             backgroundRes = backgroundRes,
             contentDescription = stringResource(R.string.cd_game_background)
         )
 
-        // Falling items
         state.items.forEach { item ->
             Image(
                 painter = painterResource(id = item.type.getDrawableRes()),
@@ -100,13 +105,12 @@ fun GameScreen(
             )
         }
 
-        // Pause button
         Image(
             painter = painterResource(id = R.drawable.btn_pause),
             contentDescription = stringResource(R.string.cd_pause_button),
             modifier = Modifier
-                .padding(start = 18.dp, top = 52.dp)
-                .size(width = 57.dp, height = 60.dp)
+                .padding(start = horizontalPadding, top = topBarPadding)
+                .size(pauseButtonSize)
                 .clickableNoRipple {
                     if (!state.isGameOver && !state.isPaused) {
                         viewModel.pause()
@@ -115,21 +119,25 @@ fun GameScreen(
             contentScale = ContentScale.Fit
         )
 
-        // Lives
         HeartsRow(
             lives = state.lives,
             maxLives = MAX_LIVES,
             modifier = Modifier
                 .align(Alignment.TopEnd)
-                .padding(end = 18.dp, top = 58.dp)
+                .padding(end = horizontalPadding, top = topBarPadding)
         )
 
+        ScorePlate(
+            score = state.score,
+            modifier = Modifier
+                .align(Alignment.TopCenter)
+                .padding(top = scoreTopPadding)
+        )
 
-        // Player
         Box(
             modifier = Modifier
                 .size(playerWidthDp, playerHeightDp)
-                .offsetPx(state.playerX, hPx * (699f / 892f))
+                .offsetPx(state.playerX, hPx * playerYOffsetRatio)
                 .pointerInput(state.isPaused, state.isGameOver) {
                     if (state.isPaused || state.isGameOver) return@pointerInput
                     detectDragGestures { _, dragAmount ->
@@ -148,7 +156,6 @@ fun GameScreen(
             )
         }
 
-        // Overlays
         if (state.isPaused && !state.isGameOver) {
             PauseOverlay(
                 onResume = { viewModel.resume() },
