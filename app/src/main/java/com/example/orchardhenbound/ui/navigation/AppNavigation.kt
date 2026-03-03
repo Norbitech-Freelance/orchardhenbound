@@ -5,7 +5,10 @@ import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+<<<<<<< HEAD
 import com.example.orchardhenbound.AppScreen
+=======
+>>>>>>> 9934ae4c0a8beaca4a779d9d471a4b4300bcf9a8
 import com.example.orchardhenbound.presentation.game.GameScreen
 import com.example.orchardhenbound.presentation.game.GameViewModel
 import com.example.orchardhenbound.presentation.loading.LoadingScreen

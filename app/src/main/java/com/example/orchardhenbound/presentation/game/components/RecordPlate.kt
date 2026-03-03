@@ -1,10 +1,18 @@
 package com.example.orchardhenbound.presentation.game.components
 
+<<<<<<< HEAD
+=======
+import androidx.compose.foundation.Image
+>>>>>>> 9934ae4c0a8beaca4a779d9d471a4b4300bcf9a8
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
+<<<<<<< HEAD
+=======
+import androidx.compose.foundation.layout.Spacer
+>>>>>>> 9934ae4c0a8beaca4a779d9d471a4b4300bcf9a8
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -13,10 +21,18 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
+<<<<<<< HEAD
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.remember
+=======
+import androidx.compose.ui.graphics.SolidColor
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import androidx.compose.foundation.shape.RoundedCornerShape
+import com.example.orchardhenbound.R
+>>>>>>> 9934ae4c0a8beaca4a779d9d471a4b4300bcf9a8
 import com.example.orchardhenbound.domain.model.Record
 import com.example.orchardhenbound.ui.theme.ACCENT_BOTTOM
 import com.example.orchardhenbound.ui.theme.ACCENT_TOP
@@ -24,9 +40,12 @@ import com.example.orchardhenbound.ui.theme.PLATE_BOTTOM
 import com.example.orchardhenbound.ui.theme.PLATE_TOP
 import com.example.orchardhenbound.ui.theme.STROKE_PRIMARY
 import com.example.orchardhenbound.presentation.components.StrokeText
+<<<<<<< HEAD
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
+=======
+>>>>>>> 9934ae4c0a8beaca4a779d9d471a4b4300bcf9a8
 
 @Composable
 fun RecordPlate(
@@ -42,10 +61,14 @@ fun RecordPlate(
             PLATE_BOTTOM.copy(alpha = bgAlpha)
         )
     )
+<<<<<<< HEAD
     val formattedDate = remember(record.date) {
         val sdf = SimpleDateFormat("dd.MM", Locale.getDefault())
         sdf.format(Date(record.date))
     }
+=======
+
+>>>>>>> 9934ae4c0a8beaca4a779d9d471a4b4300bcf9a8
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -67,7 +90,11 @@ fun RecordPlate(
             val accentBrush = Brush.linearGradient(listOf(ACCENT_TOP, ACCENT_BOTTOM))
 
             StrokeText(
+<<<<<<< HEAD
                 text = formattedDate,
+=======
+                text = record.date,
+>>>>>>> 9934ae4c0a8beaca4a779d9d471a4b4300bcf9a8
                 fontFamily = MaterialTheme.typography.bodyLarge.fontFamily!!,
                 fontSize = 32.sp,
                 fillBrush = accentBrush,

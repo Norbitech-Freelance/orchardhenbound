@@ -19,6 +19,10 @@ class GameViewModel(
     private val recordsRepository: RecordsRepository
 ) : ViewModel() {
 
+<<<<<<< HEAD
+=======
+    // --- constants (rules) ---
+>>>>>>> 9934ae4c0a8beaca4a779d9d471a4b4300bcf9a8
     private val maxLives = 3
     private val goodItemProbability = 0.75f
     private val spawnIntervalMs = 650L
@@ -33,6 +37,10 @@ class GameViewModel(
 
     private var loopJob: Job? = null
 
+<<<<<<< HEAD
+=======
+    // used for physics/spawn
+>>>>>>> 9934ae4c0a8beaca4a779d9d471a4b4300bcf9a8
     private var screenWpx: Float = 0f
     private var screenHpx: Float = 0f
     private var itemSizePx: Float = 0f
