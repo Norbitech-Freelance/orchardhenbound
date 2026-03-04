@@ -5,10 +5,10 @@ import androidx.room.Room
 import com.example.orchardhenbound.data.local.AppDatabase
 import com.example.orchardhenbound.data.repository.RecordsRepository
 import com.example.orchardhenbound.data.repository.RecordsRepositoryImpl
-import com.example.orchardhenbound.presentation.game.GameViewModel
-import com.example.orchardhenbound.presentation.records.RecordsViewModel
+import com.example.orchardhenbound.ui.presentation.game.GameViewModel
+import com.example.orchardhenbound.ui.presentation.records.RecordsViewModel
 import org.koin.android.ext.koin.androidContext
-import org.koin.androidx.viewmodel.dsl.viewModel
+import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.module
 
 val appModule = module {
@@ -25,6 +25,6 @@ val appModule = module {
 
     single<RecordsRepository> { RecordsRepositoryImpl(get()) }
 
-    viewModel { GameViewModel(get()) }
-    viewModel { RecordsViewModel(get()) }
+    viewModelOf(::GameViewModel)
+    viewModelOf(::RecordsViewModel)
 }

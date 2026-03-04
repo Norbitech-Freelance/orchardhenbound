@@ -1,72 +1,78 @@
 package com.example.orchardhenbound.ui.navigation
 
 import androidx.compose.runtime.Composable
-import androidx.navigation.NavGraph.Companion.findStartDestination
+import androidx.lifecycle.Lifecycle
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.orchardhenbound.AppScreen
-import com.example.orchardhenbound.presentation.game.GameScreen
-import com.example.orchardhenbound.presentation.game.GameViewModel
-import com.example.orchardhenbound.presentation.loading.LoadingScreen
-import com.example.orchardhenbound.presentation.menu.MenuScreen
-import com.example.orchardhenbound.presentation.privacy.PrivacyPolicyScreen
-import com.example.orchardhenbound.presentation.records.RecordsScreen
-import com.example.orchardhenbound.presentation.records.RecordsViewModel
+import com.example.orchardhenbound.ui.presentation.game.GameScreen
+import com.example.orchardhenbound.ui.presentation.game.GameViewModel
+import com.example.orchardhenbound.ui.presentation.loading.LoadingScreen
+import com.example.orchardhenbound.ui.presentation.menu.MenuScreen
+import com.example.orchardhenbound.ui.presentation.privacy.PrivacyPolicyScreen
+import com.example.orchardhenbound.ui.presentation.records.RecordsScreen
+import com.example.orchardhenbound.ui.presentation.records.RecordsViewModel
 import org.koin.androidx.compose.koinViewModel
 
+object Routes {
+    const val LOADING = "loading"
+    const val MENU = "menu"
+    const val GAME = "game"
+    const val RECORDS = "records"
+    const val PRIVACY = "privacy"
+}
 @Composable
 fun AppNavigation() {
     val navController = rememberNavController()
 
     NavHost(
         navController = navController,
-        startDestination = AppScreen.Loading.route
+        startDestination = Routes.LOADING
     ) {
-        composable(AppScreen.Loading.route) {
+        composable(Routes.LOADING) {
             LoadingScreen(
                 onFinished = {
-                    navController.navigate(AppScreen.Menu.route) {
-                        popUpTo(AppScreen.Loading.route) { inclusive = true }
-                        launchSingleTop = true
+                    if (navController.currentBackStackEntry?.lifecycle?.currentState == Lifecycle.State.RESUMED) {
+                        navController.navigate(Routes.MENU) {
+                            popUpTo(Routes.LOADING) { inclusive = true }
+                            launchSingleTop = true
+                        }
                     }
                 }
             )
         }
 
-        composable(AppScreen.Menu.route) {
+        composable(Routes.MENU) {
             MenuScreen(
-                onStart = { navController.navigate(AppScreen.Game.route) },
-                onRecords = { navController.navigate(AppScreen.Records.route) },
-                onPrivacy = { navController.navigate(AppScreen.Privacy.route) }
+                onStart = { navController.navigateSingle(Routes.GAME) },
+                onRecords = { navController.navigateSingle(Routes.RECORDS) },
+                onPrivacy = { navController.navigateSingle(Routes.PRIVACY) }
             )
         }
 
-        composable(AppScreen.Game.route) {
-            val gameViewModel: GameViewModel = koinViewModel()
+        composable(Routes.GAME) {
+            val viewModel: GameViewModel = koinViewModel()
+
             GameScreen(
-                viewModel = gameViewModel,
+                viewModel = viewModel,
                 onExitToMenu = {
-                    navController.navigate(AppScreen.Menu.route) {
-                        popUpTo(navController.graph.findStartDestination().id) { saveState = true }
-                        launchSingleTop = true
-                        restoreState = true
-                    }
+                    navController.safePopBackStack()
                 }
             )
         }
 
-        composable(AppScreen.Records.route) {
-            val recordsViewModel: RecordsViewModel = koinViewModel()
+        composable(Routes.RECORDS) {
+            val viewModel: RecordsViewModel = koinViewModel()
+
             RecordsScreen(
-                viewModel = recordsViewModel,
-                onBack = { navController.popBackStack() }
+                viewModel = viewModel,
+                onBack = { navController.safePopBackStack() }
             )
         }
 
-        composable(AppScreen.Privacy.route) {
+        composable(Routes.PRIVACY) {
             PrivacyPolicyScreen(
-                onBack = { navController.popBackStack() }
+                onBack = { navController.safePopBackStack() }
             )
         }
     }

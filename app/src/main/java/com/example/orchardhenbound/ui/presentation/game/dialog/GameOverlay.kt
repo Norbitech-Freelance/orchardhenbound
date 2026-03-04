@@ -1,4 +1,4 @@
-package com.example.orchardhenbound.presentation.game.components
+package com.example.orchardhenbound.ui.presentation.game.dialog
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -15,16 +15,17 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.orchardhenbound.R
-import com.example.orchardhenbound.presentation.components.BackButton
-import com.example.orchardhenbound.presentation.components.FullScreenBackground
-import com.example.orchardhenbound.presentation.components.ScorePlate
-import com.example.orchardhenbound.presentation.components.TitleOutlinedText
+import com.example.orchardhenbound.ui.presentation.components.TitleOutlinedText
+import com.example.orchardhenbound.ui.presentation.components.BackButton
+import com.example.orchardhenbound.ui.presentation.components.FullScreenBackground
+import com.example.orchardhenbound.ui.presentation.components.ScorePlate
 import com.example.orchardhenbound.utils.extensions.clickableNoRipple
 
 @Composable
@@ -33,6 +34,9 @@ fun GameOverOverlay(
     onPlayAgain: () -> Unit,
     onExit: () -> Unit
 ) {
+    val configuration = LocalConfiguration.current
+    val screenWidth = configuration.screenWidthDp.dp
+
     Box(modifier = Modifier.fillMaxSize()) {
 
         FullScreenBackground(
@@ -77,7 +81,7 @@ fun GameOverOverlay(
                 PlayAgainButton(
                     text = stringResource(R.string.game_play_again),
                     onClick = onPlayAgain,
-
+                    modifier = Modifier.width(screenWidth * 0.53f)
                 )
             }
 
@@ -95,7 +99,6 @@ fun PlayAgainButton(
     Box(
         contentAlignment = Alignment.Center,
         modifier = modifier
-            .fillMaxWidth(0.53f)
             .aspectRatio(3.66f)
             .clickableNoRipple { onClick() }
     ) {
@@ -112,6 +115,7 @@ fun PlayAgainButton(
         )
     }
 }
+
 @Preview(showBackground = true, device = "spec:width=412dp,height=892dp,orientation=portrait")
 @Composable
 fun GameOverOverlayPreview() {

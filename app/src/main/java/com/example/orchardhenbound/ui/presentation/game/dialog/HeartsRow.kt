@@ -1,4 +1,4 @@
-package com.example.orchardhenbound.presentation.game.components
+package com.example.orchardhenbound.ui.presentation.game.dialog
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement

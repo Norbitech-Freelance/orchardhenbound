@@ -1,6 +1,6 @@
 @file:Suppress("COMPOSE_APPLIER_CALL_MISMATCH")
 
-package com.example.orchardhenbound.presentation.game
+package com.example.orchardhenbound.ui.presentation.game
 
 import androidx.activity.compose.BackHandler
 import androidx.annotation.DrawableRes
@@ -24,11 +24,11 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import com.example.orchardhenbound.R
-import com.example.orchardhenbound.presentation.components.FullScreenBackground
-import com.example.orchardhenbound.presentation.game.components.GameOverOverlay
-import com.example.orchardhenbound.presentation.game.components.HeartsRow
-import com.example.orchardhenbound.presentation.game.components.PauseOverlay
-import com.example.orchardhenbound.presentation.components.ScorePlate
+import com.example.orchardhenbound.ui.presentation.components.FullScreenBackground
+import com.example.orchardhenbound.ui.presentation.game.dialog.GameOverOverlay
+import com.example.orchardhenbound.ui.presentation.game.dialog.HeartsRow
+import com.example.orchardhenbound.ui.presentation.game.dialog.PauseOverlay
+import com.example.orchardhenbound.ui.presentation.components.ScorePlate
 import com.example.orchardhenbound.utils.getDrawableRes
 import com.example.orchardhenbound.utils.extensions.clickableNoRipple
 import com.example.orchardhenbound.utils.extensions.offsetPx

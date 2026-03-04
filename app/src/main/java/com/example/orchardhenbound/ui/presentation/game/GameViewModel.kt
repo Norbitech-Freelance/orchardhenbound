@@ -1,4 +1,4 @@
-package com.example.orchardhenbound.presentation.game
+package com.example.orchardhenbound.ui.presentation.game
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -19,10 +19,9 @@ class GameViewModel(
     private val recordsRepository: RecordsRepository
 ) : ViewModel() {
 
-
     private val maxLives = 3
     private val goodItemProbability = 0.75f
-    private val spawnIntervalMs = 650L
+    private val spawnIntervalSec = 0.65f
 
     private val baseW = 412f
     private val baseH = 892f
@@ -34,14 +33,13 @@ class GameViewModel(
 
     private var loopJob: Job? = null
 
-
     private var screenWpx: Float = 0f
     private var screenHpx: Float = 0f
     private var itemSizePx: Float = 0f
     private var playerWidthPx: Float = 0f
     private var playerHeightPx: Float = 0f
 
-    private var spawnAccMs: Long = 0L
+    private var spawnAccSec: Float = 0f
 
     fun onScreenMetrics(
         wPx: Float,
@@ -84,21 +82,12 @@ class GameViewModel(
         }
     }
 
-    fun stopLoop() {
-        loopJob?.cancel()
-        loopJob = null
-    }
-
     fun pause() {
         _state.update { it.copy(isPaused = true) }
     }
 
     fun resume() {
         _state.update { it.copy(isPaused = false) }
-    }
-
-    fun onBackgrounded() {
-        if (!_state.value.isGameOver) pause()
     }
 
     fun onDrag(deltaX: Float) {
@@ -117,15 +106,12 @@ class GameViewModel(
     }
 
     fun playAgain() {
-        val score = _state.value.score
-        if (score > 0) {
-            viewModelScope.launch { recordsRepository.addScore(score) }
-        }
+        saveScoreIfNeeded()
 
         _state.update { old ->
             val initX = (screenWpx * initialPlayerXRatio)
                 .coerceIn(0f, max(0f, screenWpx - playerWidthPx))
-            spawnAccMs = 0L
+            spawnAccSec = 0f
             old.copy(
                 isPaused = false,
                 isGameOver = false,
@@ -139,6 +125,10 @@ class GameViewModel(
     }
 
     fun exitToMenuSaveScoreIfNeeded() {
+        saveScoreIfNeeded()
+    }
+
+    private fun saveScoreIfNeeded() {
         val score = _state.value.score
         if (score > 0) {
             viewModelScope.launch { recordsRepository.addScore(score) }
@@ -146,11 +136,9 @@ class GameViewModel(
     }
 
     private fun tick(dtSec: Float) {
-        val dtMs = (dtSec * 1000f).toLong().coerceAtLeast(0L)
-
-        spawnAccMs += dtMs
-        if (spawnAccMs >= spawnIntervalMs) {
-            spawnAccMs = 0L
+        spawnAccSec += dtSec
+        if (spawnAccSec >= spawnIntervalSec) {
+            spawnAccSec = 0f
             spawnItem()
         }
 
@@ -162,26 +150,21 @@ class GameViewModel(
         if (screenWpx <= 0f || itemSizePx <= 0f) return
 
         val type = if (Random.nextFloat() < goodItemProbability) {
-            when (Random.nextInt(5)) {
-                0 -> ItemType.GOOD_1
-                1 -> ItemType.GOOD_2
-                2 -> ItemType.GOOD_3
-                3 -> ItemType.GOOD_4
-                else -> ItemType.GOOD_5
-            }
+            listOf(ItemType.GOOD_1, ItemType.GOOD_2, ItemType.GOOD_3, ItemType.GOOD_4, ItemType.GOOD_5).random()
         } else {
-            if (Random.nextBoolean()) ItemType.BAD_1 else ItemType.BAD_2
+            listOf(ItemType.BAD_1, ItemType.BAD_2).random()
         }
 
         val x = Random.nextFloat() * max(0f, (screenWpx - itemSizePx))
-        val speed = 250f + Random.nextFloat() * 220f
+        val speedFraction = 0.2f + Random.nextFloat() * 0.18f
+        val adaptiveSpeedPxPerSec = screenHpx * speedFraction
 
         val item = FallingItem(
             id = System.nanoTime(),
             type = type,
             xPx = x,
             yPx = -itemSizePx,
-            speedPxPerSec = speed
+            speedPxPerSec = adaptiveSpeedPxPerSec
         )
 
         _state.update { it.copy(items = it.items + item) }
@@ -254,16 +237,12 @@ class GameViewModel(
         playerW: Float,
         playerH: Float
     ): Boolean {
-        val leftA = itemX
-        val topA = itemY
         val rightA = itemX + itemSize
         val bottomA = itemY + itemSize
 
-        val leftB = playerX
-        val topB = playerY
         val rightB = playerX + playerW
         val bottomB = playerY + playerH
 
-        return (rightA > leftB && leftA < rightB) && (bottomA > topB && topA < bottomB)
+        return (rightA > playerX && itemX < rightB) && (bottomA > playerY && itemY < bottomB)
     }
 }

@@ -10,7 +10,7 @@ navigationCompose = "2.9.6"
 
 compileSdk = "36"
 targetSdk = "36"
-
+ksp = "2.2.21-2.0.5"
 composeBom = "2026.01.00"
 
 room = "2.8.4"
@@ -54,4 +54,4 @@ androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-co
 android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
-kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
+ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }

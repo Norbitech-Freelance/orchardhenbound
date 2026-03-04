@@ -1,4 +1,4 @@
-package com.example.orchardhenbound.presentation.components
+package com.example.orchardhenbound.ui.presentation.components
 
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image

@@ -1,4 +1,4 @@
-package com.example.orchardhenbound.presentation.game
+package com.example.orchardhenbound.ui.presentation.game
 
 import com.example.orchardhenbound.domain.model.FallingItem
 

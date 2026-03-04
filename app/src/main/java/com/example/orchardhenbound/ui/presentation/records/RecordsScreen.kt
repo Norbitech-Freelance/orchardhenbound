@@ -1,6 +1,7 @@
-package com.example.orchardhenbound.presentation.records
+package com.example.orchardhenbound.ui.presentation.records
 
 import androidx.annotation.DrawableRes
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -12,21 +13,25 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.orchardhenbound.R
 import com.example.orchardhenbound.domain.model.Record
-import com.example.orchardhenbound.presentation.components.AccentOutlinedText
-import com.example.orchardhenbound.presentation.components.BackButton
-import com.example.orchardhenbound.presentation.components.FullScreenBackground
-import com.example.orchardhenbound.presentation.components.TitleOutlinedText
-import com.example.orchardhenbound.presentation.components.RecordItem
+import com.example.orchardhenbound.ui.presentation.components.AccentOutlinedText
+import com.example.orchardhenbound.ui.presentation.components.BackButton
+import com.example.orchardhenbound.ui.presentation.components.FullScreenBackground
+import com.example.orchardhenbound.ui.presentation.components.TitleOutlinedText
+import com.example.orchardhenbound.ui.presentation.components.RecordItem
 
 @Composable
 fun RecordsScreen(
@@ -75,7 +80,7 @@ private fun RecordsContent(
                 )
 
                 TitleOutlinedText(
-                    text = "RECORDS",
+                    text = stringResource(R.string.records_title),
                     maxFontSize = 32.sp,
                     modifier = Modifier.align(Alignment.Center)
                 )
@@ -84,15 +89,31 @@ private fun RecordsContent(
             Spacer(modifier = Modifier.fillMaxHeight(0.05f))
 
             if (records.isEmpty()) {
-                Box(
-                    modifier = Modifier.weight(1f),
-                    contentAlignment = Alignment.Center
+                Column(
+                    modifier = Modifier
+                        .weight(1f)
+                        .fillMaxWidth(),
+                    horizontalAlignment = Alignment.CenterHorizontally
                 ) {
+                    Spacer(modifier = Modifier.weight(0.15f))
+
                     AccentOutlinedText(
                         text = stringResource(R.string.records_empty),
                         maxFontSize = 36.sp
                     )
 
+                    Spacer(modifier = Modifier.weight(0.15f))
+
+                    Image(
+                        painter = painterResource(id = R.drawable.img_chicken),
+                        contentDescription = null,
+                        modifier = Modifier
+                            .fillMaxWidth(0.68f)
+                            .weight(0.73f),
+                        contentScale = ContentScale.Fit
+                    )
+
+                    Spacer(modifier = Modifier.weight(0.25f))
                 }
             } else {
                 LazyColumn(
@@ -113,5 +134,17 @@ private fun RecordsContent(
                 }
             }
         }
+    }
+}
+@Preview(showBackground = true, device = "id:pixel_7_pro")
+@Composable
+fun RecordsScreenEmptyPreview() {
+    MaterialTheme {
+        RecordsContent(
+            records = emptyList(),
+            onBack = {},
+            emptyBackgroundRes = R.drawable.bg_records_empty,
+            fullBackgroundRes = R.drawable.bg_records_full
+        )
     }
 }

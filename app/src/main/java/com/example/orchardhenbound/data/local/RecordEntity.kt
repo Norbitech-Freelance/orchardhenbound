@@ -18,10 +18,3 @@ fun RecordEntity.toDomain() = Record(
     score = score,
     createdAt = createdAt
 )
-
-fun Record.toEntity() = RecordEntity(
-    id = id,
-    date = date,
-    score = score,
-    createdAt = createdAt
-)

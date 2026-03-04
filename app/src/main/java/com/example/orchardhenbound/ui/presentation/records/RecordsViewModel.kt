@@ -1,4 +1,4 @@
-package com.example.orchardhenbound.presentation.records
+package com.example.orchardhenbound.ui.presentation.records
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.stateIn
 
 class RecordsViewModel(
-    private val recordsRepository: RecordsRepository
+    recordsRepository: RecordsRepository
 ) : ViewModel() {
 
     val records: StateFlow<List<Record>> = recordsRepository
