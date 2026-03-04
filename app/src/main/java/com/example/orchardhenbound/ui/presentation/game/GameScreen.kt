@@ -52,8 +52,7 @@ fun GameScreen(
         if (!state.isPaused) {
             viewModel.pause()
         } else {
-            viewModel.exitToMenuSaveScoreIfNeeded()
-            onExitToMenu()
+            viewModel.resume()
         }
     }
 
