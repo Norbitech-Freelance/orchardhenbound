@@ -11,7 +11,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.unit.sp
 import com.example.orchardhenbound.R
+import com.example.orchardhenbound.ui.theme.StrokeColor2
 
 @Composable
 fun CustomButton(
@@ -23,8 +25,8 @@ fun CustomButton(
 
     Box(
         modifier = modifier
-            .fillMaxWidth(0.63f)
-            .aspectRatio(3.25f)
+            .fillMaxWidth(0.7f)
+            .aspectRatio(3.5f)
             .clickable(enabled = enabled, onClick = onClick),
         contentAlignment = Alignment.Center
     ) {
@@ -36,7 +38,9 @@ fun CustomButton(
         )
 
         TitleOutlinedText(
-            text = text
+            text = text,
+            strokeColor = StrokeColor2,
+            maxFontSize = 26.sp
         )
     }
 }

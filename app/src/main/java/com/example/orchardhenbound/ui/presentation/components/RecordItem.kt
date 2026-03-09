@@ -59,19 +59,35 @@ fun RecordItem(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            AccentOutlinedText(
-                text = formattedDate,
-                modifier = Modifier
-                    .weight(1f)
-                    .wrapContentWidth(Alignment.Start)
-            )
+            if (isTopRecord) {
+                WhiteOutlinedText(
+                    text = formattedDate,
+                    modifier = Modifier
+                        .weight(1f)
+                        .wrapContentWidth(Alignment.Start)
+                )
 
-            AccentOutlinedText(
-                text = record.score.toString(),
-                modifier = Modifier
-                    .weight(1f)
-                    .wrapContentWidth(Alignment.End)
-            )
+                WhiteOutlinedText(
+                    text = record.score.toString(),
+                    modifier = Modifier
+                        .weight(1f)
+                        .wrapContentWidth(Alignment.End)
+                )
+            } else {
+                AccentOutlinedText(
+                    text = formattedDate,
+                    modifier = Modifier
+                        .weight(1f)
+                        .wrapContentWidth(Alignment.Start)
+                )
+
+                AccentOutlinedText(
+                    text = record.score.toString(),
+                    modifier = Modifier
+                        .weight(1f)
+                        .wrapContentWidth(Alignment.End)
+                )
+            }
         }
     }
 }

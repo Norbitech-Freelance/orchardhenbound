@@ -34,7 +34,7 @@ fun ScorePlate(
             modifier = Modifier.fillMaxSize(),
             contentScale = ContentScale.Fit
         )
-        AccentOutlinedText(
+        WhiteOutlinedText(
             text = score.toString(),
             maxFontSize = fontSize
         )
