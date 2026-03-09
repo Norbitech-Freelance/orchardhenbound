@@ -9,5 +9,6 @@ data class GameUiState(
     val score: Int = 0,
     val playerX: Float = 0f,
     val facingRight: Boolean = true,
-    val items: List<FallingItem> = emptyList()
+    val items: List<FallingItem> = emptyList(),
+    val isScoreSaved: Boolean = false
 )

@@ -34,9 +34,9 @@ fun RecordItem(
         R.drawable.bg_record_item_regular
     }
 
-    val formattedDate = remember(record.date) {
+    val formattedDate = remember(record.createdAt) {
         val sdf = SimpleDateFormat("dd.MM", Locale.getDefault())
-        sdf.format(Date(record.date))
+        sdf.format(Date(record.createdAt))
     }
 
     Box(

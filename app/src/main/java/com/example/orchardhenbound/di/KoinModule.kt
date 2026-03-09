@@ -18,7 +18,9 @@ val appModule = module {
             androidContext(),
             AppDatabase::class.java,
             "orchard_db"
-        ).build()
+        )
+            .fallbackToDestructiveMigration()
+            .build()
     }
 
     single { get<AppDatabase>().recordDao() }

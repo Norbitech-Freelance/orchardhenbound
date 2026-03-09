@@ -1,7 +1,6 @@
 package com.example.orchardhenbound.ui.navigation
 
 import androidx.compose.runtime.Composable
-import androidx.lifecycle.Lifecycle
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -32,11 +31,8 @@ fun AppNavigation() {
         composable(Routes.LOADING) {
             LoadingScreen(
                 onFinished = {
-                    if (navController.currentBackStackEntry?.lifecycle?.currentState == Lifecycle.State.RESUMED) {
-                        navController.navigate(Routes.MENU) {
-                            popUpTo(Routes.LOADING) { inclusive = true }
-                            launchSingleTop = true
-                        }
+                    navController.navigate(Routes.MENU) {
+                        popUpTo(Routes.LOADING) { inclusive = true }
                     }
                 }
             )

@@ -1,11 +1,11 @@
 package com.example.orchardhenbound.ui.presentation.records
 
-import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
@@ -36,28 +36,26 @@ import com.example.orchardhenbound.ui.presentation.components.RecordItem
 @Composable
 fun RecordsScreen(
     viewModel: RecordsViewModel,
-    onBack: () -> Unit,
-    @DrawableRes emptyBackgroundRes: Int = R.drawable.bg_records_empty,
-    @DrawableRes fullBackgroundRes: Int = R.drawable.bg_records_full
+    onBack: () -> Unit
 ) {
     val records by viewModel.records.collectAsStateWithLifecycle()
 
     RecordsContent(
         records = records,
-        onBack = onBack,
-        emptyBackgroundRes = emptyBackgroundRes,
-        fullBackgroundRes = fullBackgroundRes
+        onBack = onBack
     )
 }
 
 @Composable
 private fun RecordsContent(
     records: List<Record>,
-    onBack: () -> Unit,
-    @DrawableRes emptyBackgroundRes: Int,
-    @DrawableRes fullBackgroundRes: Int
+    onBack: () -> Unit
 ) {
-    val bgRes = if (records.isEmpty()) emptyBackgroundRes else fullBackgroundRes
+    val bgRes = if (records.isEmpty()) {
+        R.drawable.bg_records_empty
+    } else {
+        R.drawable.bg_records_full
+    }
 
     Box(modifier = Modifier.fillMaxSize()) {
         FullScreenBackground(
@@ -69,20 +67,22 @@ private fun RecordsContent(
             modifier = Modifier.fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Box(
+            Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(top = 48.dp, start = 16.dp, end = 16.dp)
+                    .padding(top = 48.dp, start = 16.dp, end = 16.dp),
+                verticalAlignment = Alignment.CenterVertically
             ) {
                 BackButton(
-                    onClick = onBack,
-                    modifier = Modifier.align(Alignment.CenterStart)
+                    onClick = onBack
                 )
+
+                Spacer(modifier = Modifier.fillMaxWidth(0.05f))
 
                 TitleOutlinedText(
                     text = stringResource(R.string.records_title),
                     maxFontSize = 32.sp,
-                    modifier = Modifier.align(Alignment.Center)
+                    modifier = Modifier.weight(1f)
                 )
             }
 
@@ -142,9 +142,7 @@ fun RecordsScreenEmptyPreview() {
     MaterialTheme {
         RecordsContent(
             records = emptyList(),
-            onBack = {},
-            emptyBackgroundRes = R.drawable.bg_records_empty,
-            fullBackgroundRes = R.drawable.bg_records_full
+            onBack = {}
         )
     }
 }

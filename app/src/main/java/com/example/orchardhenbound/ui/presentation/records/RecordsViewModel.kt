@@ -13,7 +13,7 @@ class RecordsViewModel(
 ) : ViewModel() {
 
     val records: StateFlow<List<Record>> = recordsRepository
-        .observeTopRecords(limit = 10)
+        .observeRecords()
         .stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(5000),

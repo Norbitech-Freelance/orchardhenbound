@@ -12,7 +12,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -23,6 +22,8 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.compose.LifecycleEventEffect
 import com.example.orchardhenbound.R
 import com.example.orchardhenbound.ui.presentation.components.FullScreenBackground
 import com.example.orchardhenbound.ui.presentation.game.dialog.GameOverOverlay
@@ -43,9 +44,13 @@ fun GameScreen(
 ) {
     val state by viewModel.state.collectAsState()
 
-    DisposableEffect(Unit) {
+    LifecycleEventEffect(Lifecycle.Event.ON_PAUSE) {
+        if (!state.isPaused && !state.isGameOver) {
+            viewModel.pause()
+        }
+    }
+    LaunchedEffect(Unit) {
         viewModel.startLoop()
-        onDispose {}
     }
 
     BackHandler(enabled = !state.isGameOver) {

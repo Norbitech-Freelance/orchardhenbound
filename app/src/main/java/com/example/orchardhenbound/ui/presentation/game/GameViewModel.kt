@@ -82,14 +82,21 @@ class GameViewModel(
         }
     }
 
+    private var prePauseState: Boolean = false
     fun pause() {
-        _state.update { it.copy(isPaused = true) }
+        val s = _state.value
+        if (!s.isPaused && !s.isGameOver) {
+            prePauseState = true
+            _state.update { it.copy(isPaused = true) }
+        }
     }
 
     fun resume() {
-        _state.update { it.copy(isPaused = false) }
+        if (_state.value.isPaused) {
+            _state.update { it.copy(isPaused = false) }
+            prePauseState = false
+        }
     }
-
     fun onDrag(deltaX: Float) {
         val s = _state.value
         if (s.isPaused || s.isGameOver) return
@@ -106,8 +113,6 @@ class GameViewModel(
     }
 
     fun playAgain() {
-        saveScoreIfNeeded()
-
         _state.update { old ->
             val initX = (screenWpx * initialPlayerXRatio)
                 .coerceIn(0f, max(0f, screenWpx - playerWidthPx))
@@ -115,6 +120,7 @@ class GameViewModel(
             old.copy(
                 isPaused = false,
                 isGameOver = false,
+                isScoreSaved = false,
                 lives = maxLives,
                 score = 0,
                 items = emptyList(),
@@ -123,15 +129,18 @@ class GameViewModel(
             )
         }
     }
-
     fun exitToMenuSaveScoreIfNeeded() {
         saveScoreIfNeeded()
     }
 
     private fun saveScoreIfNeeded() {
-        val score = _state.value.score
-        if (score > 0) {
-            viewModelScope.launch { recordsRepository.addScore(score) }
+        val s = _state.value
+        if (s.score <= 0 || s.isScoreSaved) return
+
+        _state.update { it.copy(isScoreSaved = true) }
+
+        viewModelScope.launch {
+            recordsRepository.addScore(s.score)
         }
     }
 
@@ -186,19 +195,14 @@ class GameViewModel(
 
     private fun resolveCollisions() {
         val s = _state.value
-        if (s.items.isEmpty()) return
+        if (s.items.isEmpty() || s.isGameOver) return
 
         val playerY = screenHpx * playerYRatio
-
         val (collided, remaining) = s.items.partition { item ->
             overlaps(
-                itemX = item.xPx,
-                itemY = item.yPx,
-                itemSize = itemSizePx,
-                playerX = s.playerX,
-                playerY = playerY,
-                playerW = playerWidthPx,
-                playerH = playerHeightPx
+                itemX = item.xPx, itemY = item.yPx, itemSize = itemSizePx,
+                playerX = s.playerX, playerY = playerY,
+                playerW = playerWidthPx, playerH = playerHeightPx
             )
         }
 
@@ -225,6 +229,10 @@ class GameViewModel(
                 lives = newLives.coerceAtLeast(0),
                 isGameOver = newGameOver
             )
+        }
+
+        if (newGameOver) {
+            saveScoreIfNeeded()
         }
     }
 
