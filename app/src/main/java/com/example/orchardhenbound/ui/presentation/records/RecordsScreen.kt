@@ -27,11 +27,11 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.orchardhenbound.R
 import com.example.orchardhenbound.domain.model.Record
-import com.example.orchardhenbound.ui.presentation.components.AccentOutlinedText
 import com.example.orchardhenbound.ui.presentation.components.BackButton
 import com.example.orchardhenbound.ui.presentation.components.FullScreenBackground
 import com.example.orchardhenbound.ui.presentation.components.TitleOutlinedText
 import com.example.orchardhenbound.ui.presentation.components.RecordItem
+import com.example.orchardhenbound.ui.presentation.components.WhiteOutlinedText
 
 @Composable
 fun RecordsScreen(
@@ -97,7 +97,7 @@ private fun RecordsContent(
                 ) {
                     Spacer(modifier = Modifier.weight(0.15f))
 
-                    AccentOutlinedText(
+                    WhiteOutlinedText(
                         text = stringResource(R.string.records_empty),
                         maxFontSize = 36.sp
                     )

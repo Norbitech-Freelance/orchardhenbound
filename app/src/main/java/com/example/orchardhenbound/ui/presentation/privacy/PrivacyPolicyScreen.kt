@@ -17,6 +17,7 @@ import com.example.orchardhenbound.R
 import com.example.orchardhenbound.ui.presentation.components.BackButton
 import com.example.orchardhenbound.ui.presentation.components.FullScreenBackground
 import com.example.orchardhenbound.ui.presentation.components.TitleOutlinedText
+import com.example.orchardhenbound.ui.theme.StrokeColor3
 
 @Composable
 fun PrivacyPolicyScreen(onBack: () -> Unit) {
@@ -40,6 +41,7 @@ fun PrivacyPolicyScreen(onBack: () -> Unit) {
             ) {
                 TitleOutlinedText(
                     text = stringResource(R.string.privacy_policy_title),
+                    strokeColor = StrokeColor3,
                     maxFontSize = 32.sp
                 )
             }
