@@ -152,7 +152,7 @@ fun GameScreen(
         ) {
             Image(
                 painter = painterResource(
-                    id = if (state.facingRight) R.drawable.player_right else R.drawable.player_left
+                    id = if (state.facingRight) R.drawable.player else R.drawable.player
                 ),
                 contentDescription = stringResource(R.string.cd_player_character),
                 modifier = Modifier.fillMaxSize(),

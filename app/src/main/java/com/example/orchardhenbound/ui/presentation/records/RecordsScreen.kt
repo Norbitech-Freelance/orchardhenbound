@@ -1,6 +1,5 @@
 package com.example.orchardhenbound.ui.presentation.records
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -18,8 +17,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -52,9 +49,9 @@ private fun RecordsContent(
     onBack: () -> Unit
 ) {
     val bgRes = if (records.isEmpty()) {
-        R.drawable.bg_records_empty
+        R.drawable.bg_records
     } else {
-        R.drawable.bg_records_full
+        R.drawable.bg_records
     }
 
     Box(modifier = Modifier.fillMaxSize()) {
@@ -102,18 +99,7 @@ private fun RecordsContent(
                         maxFontSize = 36.sp
                     )
 
-                    Spacer(modifier = Modifier.weight(0.15f))
-
-                    Image(
-                        painter = painterResource(id = R.drawable.img_chicken),
-                        contentDescription = null,
-                        modifier = Modifier
-                            .fillMaxWidth(0.68f)
-                            .weight(0.73f),
-                        contentScale = ContentScale.Fit
-                    )
-
-                    Spacer(modifier = Modifier.weight(0.25f))
+                    Spacer(modifier = Modifier.weight(1f))
                 }
             } else {
                 LazyColumn(

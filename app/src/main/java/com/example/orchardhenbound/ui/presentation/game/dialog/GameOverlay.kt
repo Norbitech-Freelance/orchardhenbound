@@ -40,7 +40,7 @@ fun GameOverOverlay(
     Box(modifier = Modifier.fillMaxSize()) {
 
         FullScreenBackground(
-            backgroundRes = R.drawable.bg_overlay,
+            backgroundRes = R.drawable.bg_pause,
             contentDescription = null
         )
 

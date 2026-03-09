@@ -22,7 +22,7 @@ import com.example.orchardhenbound.ui.presentation.components.TitleOutlinedText
 fun PrivacyPolicyScreen(onBack: () -> Unit) {
     Box(modifier = Modifier.fillMaxSize()) {
         FullScreenBackground(
-            backgroundRes = R.drawable.bg_privacy,
+            backgroundRes = R.drawable.bg_menu,
             contentDescription = stringResource(R.string.cd_privacy_background)
         )
 

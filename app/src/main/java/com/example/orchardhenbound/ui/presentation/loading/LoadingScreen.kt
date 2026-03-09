@@ -27,7 +27,8 @@ fun LoadingScreen(onFinished: () -> Unit) {
     val frames = listOf(
         R.drawable.loading_1,
         R.drawable.loading_2,
-        R.drawable.loading_3
+        R.drawable.loading_3,
+        R.drawable.loading_4
     )
 
     val frameIndex = remember { mutableIntStateOf(0) }
@@ -57,11 +58,11 @@ fun LoadingScreen(onFinished: () -> Unit) {
             Spacer(modifier = Modifier.weight(0.25f))
 
             Image(
-                painter = painterResource(id = R.drawable.loading_logo),
+                painter = painterResource(id = R.drawable.logo),
                 contentDescription = null,
                 modifier = Modifier
                     .fillMaxWidth(0.67f)
-                    .aspectRatio(2.82f),
+                    .aspectRatio(1.35f),
                 contentScale = ContentScale.Fit
             )
 
@@ -75,19 +76,7 @@ fun LoadingScreen(onFinished: () -> Unit) {
                     .aspectRatio(6.16f),
                 contentScale = ContentScale.Fit
             )
-
-            Spacer(modifier = Modifier.weight(0.1f))
-
-            Image(
-                painter = painterResource(id = R.drawable.loading_chicken),
-                contentDescription = null,
-                modifier = Modifier
-                    .fillMaxWidth(0.53f)
-                    .weight(0.73f),
-                contentScale = ContentScale.Fit
-            )
-
-            Spacer(modifier = Modifier.weight(0.05f))
+            Spacer(modifier = Modifier.weight(1f))
         }
     }
 }
