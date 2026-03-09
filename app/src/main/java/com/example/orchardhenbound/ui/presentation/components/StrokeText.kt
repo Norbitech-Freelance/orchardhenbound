@@ -9,9 +9,9 @@ import androidx.compose.foundation.text.TextAutoSize
 import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.StrokeJoin
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.text.style.TextAlign
@@ -33,7 +33,7 @@ fun TitleOutlinedText(
 ) {
     BaseAutoResizedOutlinedText(
         text = text,
-        fillBrush = TitleGradient,
+        fillColor = TitleGradient,
         modifier = modifier,
         minFontSize = minFontSize,
         maxFontSize = maxFontSize
@@ -49,7 +49,7 @@ fun AccentOutlinedText(
 ) {
     BaseAutoResizedOutlinedText(
         text = text,
-        fillBrush = AccentGradient,
+        fillColor = AccentGradient,
         modifier = modifier,
         minFontSize = minFontSize,
         maxFontSize = maxFontSize
@@ -59,7 +59,7 @@ fun AccentOutlinedText(
 @Composable
 private fun BaseAutoResizedOutlinedText(
     text: String,
-    fillBrush: Brush,
+    fillColor: Color,
     modifier: Modifier = Modifier,
     minFontSize: TextUnit = 1.sp,
     maxFontSize: TextUnit = 32.sp,
@@ -82,7 +82,7 @@ private fun BaseAutoResizedOutlinedText(
     )
 
     val fillStyle = baseStyle.copy(
-        brush = fillBrush
+        color = fillColor
     )
 
     Box(

@@ -13,7 +13,16 @@ class RecordsRepositoryImpl(
 
     override fun observeRecords(): Flow<List<Record>> =
         dao.observeAllRecords().map { entities ->
-            entities.map { it.toDomain() }
+            val allRecords = entities.map { it.toDomain() }
+
+            val top3 = allRecords.take(3)
+
+            val recent3 = allRecords
+                .drop(3)
+                .sortedByDescending { it.createdAt }
+                .take(3)
+
+            top3 + recent3
         }
 
     override suspend fun addScore(score: Int) {
