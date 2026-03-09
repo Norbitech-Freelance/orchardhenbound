@@ -26,6 +26,7 @@ import com.example.orchardhenbound.ui.presentation.components.TitleOutlinedText
 import com.example.orchardhenbound.ui.presentation.components.BackButton
 import com.example.orchardhenbound.ui.presentation.components.FullScreenBackground
 import com.example.orchardhenbound.ui.presentation.components.ScorePlate
+import com.example.orchardhenbound.ui.theme.StrokeColor2
 import com.example.orchardhenbound.utils.extensions.clickableNoRipple
 
 @Composable
@@ -111,6 +112,7 @@ fun PlayAgainButton(
 
         TitleOutlinedText(
             text = text,
+            strokeColor = StrokeColor2,
             maxFontSize = 28.sp
         )
     }
