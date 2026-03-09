@@ -40,7 +40,7 @@ fun PrivacyPolicyScreen(onBack: () -> Unit) {
             ) {
                 TitleOutlinedText(
                     text = stringResource(R.string.privacy_policy_title),
-                    maxFontSize = 32.sp
+                    maxFontSize = 40.sp
                 )
             }
         }

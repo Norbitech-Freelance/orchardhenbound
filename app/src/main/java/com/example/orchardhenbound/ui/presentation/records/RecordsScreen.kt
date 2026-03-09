@@ -64,22 +64,21 @@ private fun RecordsContent(
             modifier = Modifier.fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
+            Spacer(modifier = Modifier.fillMaxHeight(0.06f))
+
             Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 48.dp, start = 16.dp, end = 16.dp),
+                modifier = Modifier.fillMaxWidth(0.85f),
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 BackButton(
                     onClick = onBack
                 )
 
-                Spacer(modifier = Modifier.fillMaxWidth(0.05f))
+                Spacer(modifier = Modifier.weight(1f))
 
                 TitleOutlinedText(
                     text = stringResource(R.string.records_title),
-                    maxFontSize = 32.sp,
-                    modifier = Modifier.weight(1f)
+                    maxFontSize = 40.sp
                 )
             }
 
